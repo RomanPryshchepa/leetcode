@@ -26,21 +26,41 @@ public class Solution {
     int[] nums;
 
     nums = new int[]{5, 2, 3, 1};
-    System.out.println(Arrays.toString(solution.sortArray(nums))); // 1,2,3,5
+    System.out.println(Arrays.toString(solution.sortArrayM(nums))); // 1,2,3,5
+    System.out.println(Arrays.toString(solution.sortArrayI(nums))); // 1,2,3,5
 
     nums = new int[]{5, 1, 1, 2, 0, 0};
-    System.out.println(Arrays.toString(solution.sortArray(nums))); // 0,0,1,1,2,5
+    System.out.println(Arrays.toString(solution.sortArrayM(nums))); // 0,0,1,1,2,5
+    System.out.println(Arrays.toString(solution.sortArrayI(nums))); // 0,0,1,1,2,5
+  }
+
+  // Insertion Sort
+  public int[] sortArrayI(int[] nums) {
+    if (nums.length <= 1) {
+      return nums;
+    }
+    for (int i = 1; i < nums.length; i++) {
+      int k = i;
+      int current = nums[i];
+      while (k > 0 && nums[k - 1] > current) {
+        nums[k] = nums[k - 1];
+        k--;
+      }
+      nums[k] = current;
+    }
+    return nums;
   }
 
 
-  public int[] sortArray(int[] nums) {
+  // Merge Sort
+  public int[] sortArrayM(int[] nums) {
     if (nums.length <= 1) {
       return nums;
     }
     int[] left = Arrays.copyOfRange(nums, 0, nums.length / 2);
     int[] right = Arrays.copyOfRange(nums, nums.length / 2, nums.length);
 
-    merge(sortArray(left), sortArray(right), nums);
+    merge(sortArrayI(left), sortArrayI(right), nums);
     return nums;
   }
 
