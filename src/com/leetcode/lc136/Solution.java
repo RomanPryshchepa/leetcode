@@ -52,6 +52,17 @@ public class Solution {
     System.out.println(solution.singleNumber(nums)); // 1
   }
 
+  public int singleNumberV2(int[] nums) {
+    if (nums.length == 1) {
+      return nums[0];
+    }
+    int res = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+      res ^= nums[i];
+    }
+    return res;
+  }
+
   public int singleNumber(int[] nums) {
     if (nums.length == 1) {
       return nums[0];
