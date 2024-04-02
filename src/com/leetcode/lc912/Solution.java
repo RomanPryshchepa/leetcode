@@ -28,10 +28,31 @@ public class Solution {
     nums = new int[]{5, 2, 3, 1};
     System.out.println(Arrays.toString(solution.sortArrayM(nums))); // 1,2,3,5
     System.out.println(Arrays.toString(solution.sortArrayI(nums))); // 1,2,3,5
+    System.out.println(Arrays.toString(solution.sortArrayB(nums))); // 1,2,3,5
 
     nums = new int[]{5, 1, 1, 2, 0, 0};
     System.out.println(Arrays.toString(solution.sortArrayM(nums))); // 0,0,1,1,2,5
     System.out.println(Arrays.toString(solution.sortArrayI(nums))); // 0,0,1,1,2,5
+    System.out.println(Arrays.toString(solution.sortArrayB(nums))); // 0,0,1,1,2,5
+  }
+
+  // Bubble Sort
+  public int[] sortArrayB(int[] nums) {
+    boolean isSwap = true;
+    int k = 0;
+    while (isSwap) {
+      isSwap = false;
+      for (int i = 1; i < nums.length - k; i++) {
+        if (nums[i - 1] > nums[i]) {
+          int tmp = nums[i - 1];
+          nums[i - 1] = nums[i];
+          nums[i] = tmp;
+          isSwap = true;
+        }
+      }
+      k++;
+    }
+    return nums;
   }
 
   // Insertion Sort
