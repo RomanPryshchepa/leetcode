@@ -48,6 +48,58 @@ public class Solution {
   }
 
   public String originalDigits(String s) {
+    int[] digits = new int[10];
+    for (int i = 0; i < s.length(); i++) {
+      if (s.charAt(i) == 'z') { // zero
+        digits[0]++;
+      }
+      if (s.charAt(i) == 'w') { // two
+        digits[2]++;
+      }
+      if (s.charAt(i) == 'u') { // four
+        digits[4]++;
+      }
+      if (s.charAt(i) == 'x') { // six
+        digits[6]++;
+      }
+      if (s.charAt(i) == 'g') { // eight
+        digits[8]++;
+      }
+      if (s.charAt(i) == 'r') { // three and zero and four
+        digits[3]++;
+      }
+      if (s.charAt(i) == 'f') { // five and four
+        digits[5]++;
+      }
+      if (s.charAt(i) == 'v') { // seven and five
+        digits[7]++;
+      }
+      if (s.charAt(i) == 'o') { // one and zero and two and four
+        digits[1]++;
+      }
+      if (s.charAt(i) == 'i') { // nine and five and six and eight
+        digits[9]++;
+      }
+    }
+
+    digits[5] = digits[5] - digits[4];
+    digits[7] = digits[7] - digits[5];
+    digits[3] = digits[3] - digits[4] - digits[0];
+    digits[1] = digits[1] - digits[0] - digits[2] - digits[4];
+    digits[9] = digits[9] - digits[5] - digits[6] - digits[8];
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < digits.length; i++) {
+      while (digits[i] > 0) {
+        sb.append(i);
+        digits[i]--;
+      }
+    }
+
+    return sb.toString();
+  }
+
+  public String originalDigitsV1(String s) {
     char[] charArray = s.toCharArray();
     char[] result = new char[10];
     Map<Character, Integer> digitMap = new HashMap<>();
