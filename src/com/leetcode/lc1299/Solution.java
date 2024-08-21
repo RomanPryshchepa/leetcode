@@ -38,22 +38,23 @@ Constraints:
  */
 public class Solution {
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(Arrays.toString(solution.replaceElements(new int[]{17, 18, 5, 4, 6, 1})));
-        System.out.println(Arrays.toString(solution.replaceElements(new int[]{400})));
-    }
+  public static void main(String[] args) {
+    Solution solution = new Solution();
+    System.out.println(Arrays.toString(solution.replaceElements(new int[]{17, 18, 5, 4, 6, 1})));
+    System.out.println(Arrays.toString(solution.replaceElements(new int[]{400})));
+  }
 
-    public int[] replaceElements(int[] arr) {
-        var result = new int[arr.length];
-        var max = Integer.MIN_VALUE;
-        result[result.length - 1] = -1;
-        for (int i = arr.length - 1; i > 0; --i) {
-            if (max < arr[i])
-                max = arr[i];
-            result[i - 1] = max;
+  public int[] replaceElements(int[] arr) {
+    var result = new int[arr.length];
+    var max = Integer.MIN_VALUE;
+    result[result.length - 1] = -1;
+    for (int i = arr.length - 1; i > 0; --i) {
+        if (max < arr[i]) {
+            max = arr[i];
         }
-
-        return result;
+      result[i - 1] = max;
     }
+
+    return result;
+  }
 }

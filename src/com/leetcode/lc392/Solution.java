@@ -31,29 +31,32 @@ Constraints:
 Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?
  */
 public class Solution {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
 
-        System.out.println(solution.isSubsequence("abc", "ahbgdc"));
-        System.out.println(solution.isSubsequence("axc", "ahbgdc"));
-        System.out.println(solution.isSubsequence("ace", "abcde"));
-        System.out.println(solution.isSubsequence("aec", "abcde"));
+  public static void main(String[] args) {
+    Solution solution = new Solution();
+
+    System.out.println(solution.isSubsequence("abc", "ahbgdc"));
+    System.out.println(solution.isSubsequence("axc", "ahbgdc"));
+    System.out.println(solution.isSubsequence("ace", "abcde"));
+    System.out.println(solution.isSubsequence("aec", "abcde"));
+  }
+
+  public boolean isSubsequence(String s, String t) {
+      if (s == null || t == null
+          || s.length() > t.length()) {
+          return false;
+      }
+
+    var pointerT = 0;
+    var pointerS = 0;
+
+    while (pointerS < s.length() && pointerT < t.length()) {
+      if (s.charAt(pointerS) == t.charAt(pointerT)) {
+        pointerS++;
+      }
+      pointerT++;
     }
 
-    public boolean isSubsequence(String s, String t) {
-        if (s == null || t == null
-                || s.length() > t.length()) return false;
-
-        var pointerT = 0;
-        var pointerS = 0;
-
-        while (pointerS < s.length() && pointerT < t.length()) {
-            if (s.charAt(pointerS) == t.charAt(pointerT)) {
-                pointerS++;
-            }
-            pointerT++;
-        }
-
-        return pointerS == s.length();
-    }
+    return pointerS == s.length();
+  }
 }
