@@ -35,29 +35,32 @@ public class Solution {
     Solution solution = new Solution();
     System.out.println(solution.mySqrt(4)); // 2
     System.out.println(solution.mySqrt(8)); // 2
-    System.out.println(solution.mySqrt(100)); // 2
-    System.out.println(solution.mySqrt(99)); // 2
-    System.out.println(solution.mySqrt(0)); // 2
-    System.out.println(solution.mySqrt(1)); // 2
-    System.out.println(solution.mySqrt(2)); // 2
-    System.out.println(solution.mySqrt(3)); // 2
-    System.out.println(solution.mySqrt(9)); // 2
-    System.out.println(solution.mySqrt(2147395599)); // 2
+    System.out.println(solution.mySqrt(100)); // 10
+    System.out.println(solution.mySqrt(99)); // 9
+    System.out.println(solution.mySqrt(0)); // 0
+    System.out.println(solution.mySqrt(1)); // 1
+    System.out.println(solution.mySqrt(2)); // 1
+    System.out.println(solution.mySqrt(3)); // 1
+    System.out.println(solution.mySqrt(9)); // 3
+    System.out.println(solution.mySqrt(2147395599)); // 46339
+    System.out.println(solution.mySqrt(46339)); //215
+    System.out.println(solution.mySqrt(463395)); //680
+    System.out.println(solution.mySqrt(146339)); //382
+    System.out.println(solution.mySqrt(35646339)); //5970
   }
 
   public int mySqrt(int x) {
-    int left = 0;
-    int right = x / 2;
-    int result = left + (right - left) / 2;
-    while (!(1l * result * result == x || 1l * result * result < x && 1l * (result + 1) * (result + 1) > x)) {
+    var left = 0;
+    var right = x / 2 + 1;
+    var result = 0;
+    while (left <= right) {
+      result = left + (right - left) / 2;
       if (1l * result * result > x) {
         right = result - 1;
       } else {
         left = result + 1;
       }
-      result = left + (right - left) / 2;
     }
-    return result;
+    return right;
   }
-
 }
