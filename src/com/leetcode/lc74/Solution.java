@@ -39,51 +39,39 @@ public class Solution {
   public static void main(String[] args) {
     int[][] matrix;
     int target;
-    //Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
-    //Output: true
+
     matrix = new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}};
     target = 60;
-    System.out.println(searchMatrix(matrix, target));
-    //Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
-    //Output: false
+    System.out.println(searchMatrix(matrix, target)); // true
+
     matrix = new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}};
     target = 13;
-//    System.out.println(searchMatrix(matrix, target));
+    System.out.println(searchMatrix(matrix, target)); // false
 
     matrix = new int[][]{{1}, {2}};
     target = 2;
-//    System.out.println(searchMatrix(matrix, target));
-//    getIJ(5, 3);
+    System.out.println(searchMatrix(matrix, target)); // true
   }
 
   public static boolean searchMatrix(int[][] matrix, int target) {
-    int n = matrix.length;
-    int m = matrix[0].length;
-    int leftI = 0;
-    int rightI = n * m - 1;
-    do {
-      int centerI = leftI + (rightI - leftI) / 2;
-      int center = matrix[centerI / m][centerI % m];
-      int left = matrix[leftI / m][leftI % m];
-      int right = matrix[rightI / m][rightI % m];
-      if (target == center || target == left || target == right) {
+    var start = 0;
+    var end = matrix.length * matrix[0].length - 1;
+    var mid = 0;
+    var i = 0;
+    var j = 0;
+    while (start <= end) {
+      mid = (start + end) >> 1;
+      i = mid / matrix[0].length;
+      j = mid % matrix[0].length;
+      if (matrix[i][j] == target) {
         return true;
       }
-      if (target < center) {
-        rightI = centerI;
+      if (matrix[i][j] < target) {
+        start = mid + 1;
       } else {
-        leftI = centerI;
+        end = mid - 1;
       }
-    } while (rightI - leftI > 1);
-    return false;
-  }
-
-  public static void getIJ(int m, int n) {
-//    int o = Math.max(m, n);
-    for (int k = 1; k <= m * n; k++) {
-      int i = (k - 1) / m;
-      int j = (k - 1) % m;
-      System.out.println("k = %d [i, j] = [%d, %d]".formatted(k, i, j));
     }
+    return false;
   }
 }
