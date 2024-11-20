@@ -69,6 +69,19 @@ public class Solution {
 
   public static ListNode reverseList(ListNode head) {
     ListNode newHead = null;
+    var current = head;
+    ListNode next;
+    while (current != null) {
+      next = current.next;
+      current.next = newHead;
+      newHead = current;
+      current = next;
+    }
+    return newHead;
+  }
+
+  public static ListNode reverseList2(ListNode head) {
+    ListNode newHead = null;
     ListNode current = head;
     while (current != null) {
       newHead = new ListNode(current.val, newHead);
