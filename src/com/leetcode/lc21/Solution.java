@@ -1,5 +1,8 @@
 package com.leetcode.lc21;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -48,30 +51,33 @@ Constraints:
 public class Solution {
 
   public static void main(String[] args) {
+    Solution solution = new Solution();
     ListNode head1;
     ListNode head2;
 
     head1 = createList(1, 2, 4);
     head2 = createList(1, 3, 4);
-    printList(head1);
-    printList(head2);
-    printList(mergeTwoLists(head1, head2));
+    printList(head1, " > ");
+    printList(head2, " > ");
+    printList(solution.mergeTwoLists(head1, head2), " > ");
+    printList(solution.mergeTwoLists2(head1, head2), " > ");
 
     head1 = createList();
     head2 = createList();
-    printList(head1);
-    printList(head2);
-    printList(mergeTwoLists(head1, head2));
+    printList(head1, " > ");
+    printList(head2, " > ");
+    printList(solution.mergeTwoLists(head1, head2), " > ");
+    printList(solution.mergeTwoLists2(head1, head2), " > ");
 
     head1 = createList(1);
     head2 = createList(0);
-    printList(head1);
-    printList(head2);
-    printList(mergeTwoLists(head1, head2));
-
+    printList(head1, " > ");
+    printList(head2, " > ");
+    printList(solution.mergeTwoLists(head1, head2), " > ");
+    printList(solution.mergeTwoLists2(head1, head2), " > ");
   }
 
-  public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+  public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
     ListNode current = null;
     if (list1 != null && list2 != null) {
       if (list1.val < list2.val) {
@@ -114,32 +120,51 @@ public class Solution {
     return head;
   }
 
-  public static ListNode createList(int... elements) {
-    ListNode head = null;
-    if (elements.length > 0) {
-      head = new ListNode(elements[0]);
+  public ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
+    ListNode result = null;
+    ListNode current1 = list1;
+    ListNode current2 = list2;
+
+    if (list1 != null && list2 != null) {
+      if (list1.val < list2.val) {
+        result = new ListNode(list1.val);
+        current1 = list1.next;
+      } else {
+        result = new ListNode(list2.val);
+        current2 = list2.next;
+      }
+    } else {
+      if (list1 != null) {
+        result = new ListNode(list1.val);
+        current1 = list1.next;
+      }
+      if (list2 != null) {
+        result = new ListNode(list2.val);
+        current2 = list2.next;
+      }
     }
-    ListNode current = head;
-    for (int i = 1; i < elements.length; i++) {
-      current.next = new ListNode(elements[i]);
+    ListNode current = result;
+    while (current1 != null || current2 != null) {
+      if (current1 != null && current2 != null) {
+        if (current1.val < current2.val) {
+          current.next = new ListNode(current1.val);
+          current1 = current1.next;
+        } else {
+          current.next = new ListNode(current2.val);
+          current2 = current2.next;
+        }
+      } else {
+        if (current1 != null) {
+          current.next = new ListNode(current1.val);
+          current1 = current1.next;
+        }
+        if (current2 != null) {
+          current.next = new ListNode(current2.val);
+          current2 = current2.next;
+        }
+      }
       current = current.next;
     }
-
-    return head;
-  }
-
-  public static void printList(ListNode head) {
-    if (head == null) {
-      System.out.println();
-      return;
-    }
-    ListNode current = head;
-    String delimiter = "";
-    while (current != null) {
-      System.out.print(delimiter + current.val);
-      delimiter = " -> ";
-      current = current.next;
-    }
-    System.out.println();
+    return result;
   }
 }

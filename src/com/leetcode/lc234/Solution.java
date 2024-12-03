@@ -1,5 +1,11 @@
 package com.leetcode.lc234;
 
+import static com.leetcode.tools.ListNodeHelper.*;
+
+import com.leetcode.tools.ListNode;
+import java.util.Deque;
+import java.util.LinkedList;
+
 /*
 234. Palindrome Linked List
 
@@ -30,23 +36,22 @@ Constraints:
 Follow up: Could you do it in O(n) time and O(1) space?
  */
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ * Definition for singly-linked list. public class ListNode { int val; ListNode next; ListNode() {}
+ * ListNode(int val) { this.val = val; } ListNode(int val, ListNode next) { this.val = val;
+ * this.next = next; } }
  */
 class Solution {
 
   public static void main(String[] args) {
+    Solution solution = new Solution();
+    var head = createList(1, 2, 2, 1);
+    printList(head);
+    System.out.println(solution.isPalindrome(head)); // true
 
+    head = createList(1, 2);
+    printList(head);
+    System.out.println(solution.isPalindrome(head)); // false
   }
 
   public boolean isPalindrome(ListNode head) {

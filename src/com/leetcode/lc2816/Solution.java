@@ -1,5 +1,9 @@
 package com.leetcode.lc2816;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+import java.util.LinkedList;
+
 /*
 2816. Double a Number Represented as a Linked List
 
@@ -29,8 +33,6 @@ Constraints:
     0 <= Node.val <= 9
     The input is generated such that the list represents a number that does not have leading zeros, except the number 0 itself.
  */
-
-import java.util.LinkedList;
 
 /**
  * Definition for singly-linked list.
@@ -104,30 +106,5 @@ public class Solution {
       result = new ListNode(1, result);
     }
     return result;
-  }
-
-  private static void printList(ListNode head, String divisor) {
-    ListNode cur = head;
-    String div = "";
-    while (cur != null) {
-      System.out.print(div + cur.val);
-      div = divisor;
-      cur = cur.next;
-    }
-    System.out.println();
-  }
-
-  private static void printList(ListNode head) {
-    printList(head, " -> ");
-  }
-
-  private static ListNode createList(int... vals) {
-    ListNode head = new ListNode(vals[0]);
-    ListNode cur = head;
-    for (int i = 1; i < vals.length; i++) {
-      cur.next = new ListNode(vals[i]);
-      cur = cur.next;
-    }
-    return head;
   }
 }

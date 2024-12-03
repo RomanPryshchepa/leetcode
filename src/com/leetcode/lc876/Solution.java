@@ -1,5 +1,8 @@
 package com.leetcode.lc876;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+
 /*
 876. Middle of the Linked List
 
@@ -28,6 +31,7 @@ Constraints:
     The number of nodes in the list is in the range [1, 100].
     1 <= Node.val <= 100
  */
+
 /**
  * Definition for singly-linked list. public class ListNode { int val; ListNode next; ListNode() {}
  * ListNode(int val) { this.val = val; } ListNode(int val, ListNode next) { this.val = val;
@@ -39,25 +43,25 @@ class Solution {
     Solution solution = new Solution();
     ListNode head;
 
-    head = solution.createList(1, 2, 3, 4, 5);
-    solution.printList(head);
-    solution.printList(solution.middleNode(head));
+    head = createList(1, 2, 3, 4, 5);
+    printList(head);
+    printList(solution.middleNode(head));
 
-    head = solution.createList(1, 2, 3, 4, 5, 6);
-    solution.printList(head);
-    solution.printList(solution.middleNode(head));
+    head = createList(1, 2, 3, 4, 5, 6);
+    printList(head);
+    printList(solution.middleNode(head));
 
-    head = solution.createList(1);
-    solution.printList(head);
-    solution.printList(solution.middleNode(head));
+    head = createList(1);
+    printList(head);
+    printList(solution.middleNode(head));
 
-    head = solution.createList(1, 2);
-    solution.printList(head);
-    solution.printList(solution.middleNode(head));
+    head = createList(1, 2);
+    printList(head);
+    printList(solution.middleNode(head));
 
-    head = solution.createList();
-    solution.printList(head);
-    solution.printList(solution.middleNode(head));
+    head = createList();
+    printList(head);
+    printList(solution.middleNode(head));
   }
 
   public ListNode middleNode(ListNode head) {
@@ -72,34 +76,5 @@ class Solution {
       current = current.next;
     }
     return current;
-  }
-
-  public ListNode createList(int... elements) {
-    ListNode head = null;
-    if (elements.length > 0) {
-      head = new ListNode(elements[0]);
-    }
-    ListNode current = head;
-    for (int i = 1; i < elements.length; i++) {
-      current.next = new ListNode(elements[i]);
-      current = current.next;
-    }
-
-    return head;
-  }
-
-  public void printList(ListNode head) {
-    if (head == null) {
-      System.out.println();
-      return;
-    }
-    ListNode current = head;
-    String delimiter = "";
-    while (current != null) {
-      System.out.print(delimiter + current.val);
-      delimiter = " -> ";
-      current = current.next;
-    }
-    System.out.println();
   }
 }

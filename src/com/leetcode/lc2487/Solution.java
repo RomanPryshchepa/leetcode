@@ -1,5 +1,9 @@
 package com.leetcode.lc2487;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+import java.util.LinkedList;
+
 /*
 2487. Remove Nodes From Linked List
 
@@ -34,9 +38,6 @@ Constraints:
     1 <= Node.val <= 105
  */
 
-import java.util.LinkedList;
-import java.util.Stack;
-
 /**
  * Definition for singly-linked list. public class ListNode { int val; ListNode next; ListNode() {}
  * ListNode(int val) { this.val = val; } ListNode(int val, ListNode next) { this.val = val;
@@ -46,20 +47,20 @@ class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    var list1 = solution.createList(5, 2, 13, 3, 8);
-    solution.printList(list1);
+    var list1 = createList(5, 2, 13, 3, 8);
+    printList(list1, " > ");
     var list2 = solution.removeNodes(list1);
-    solution.printList(list2);
+    printList(list2, " > ");
 
-    list1 = solution.createList(1, 1, 1, 1);
-    solution.printList(list1);
+    list1 = createList(1, 1, 1, 1);
+    printList(list1, " > ");
     list2 = solution.removeNodes(list1);
-    solution.printList(list2);
+    printList(list2, " > ");
 
-    list1 = solution.createList(10, 1, 1, 11);
-    solution.printList(list1);
+    list1 = createList(10, 1, 1, 11);
+    printList(list1, " > ");
     list2 = solution.removeNodes(list1);
-    solution.printList(list2);
+    printList(list2, " > ");
   }
 
   public ListNode removeNodes(ListNode head) {
@@ -78,34 +79,5 @@ class Solution {
       }
     }
     return head;
-  }
-
-  public ListNode createList(int... elements) {
-    ListNode head = null;
-    if (elements.length > 0) {
-      head = new ListNode(elements[0]);
-    }
-    ListNode current = head;
-    for (int i = 1; i < elements.length; i++) {
-      current.next = new ListNode(elements[i]);
-      current = current.next;
-    }
-
-    return head;
-  }
-
-  public void printList(ListNode head) {
-    if (head == null) {
-      System.out.println();
-      return;
-    }
-    ListNode current = head;
-    String delimiter = "";
-    while (current != null) {
-      System.out.print(delimiter + current.val);
-      delimiter = " -> ";
-      current = current.next;
-    }
-    System.out.println();
   }
 }

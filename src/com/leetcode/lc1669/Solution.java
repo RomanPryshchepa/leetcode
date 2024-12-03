@@ -1,5 +1,8 @@
 package com.leetcode.lc1669;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+
 /*
 1669. Merge In Between Linked Lists
 
@@ -33,6 +36,7 @@ Constraints:
     1 <= a <= b < list1.length - 1
     1 <= list2.length <= 104
  */
+
 /**
  * Definition for singly-linked list. public class ListNode { int val; ListNode next; ListNode() {}
  * ListNode(int val) { this.val = val; } ListNode(int val, ListNode next) { this.val = val;
@@ -41,7 +45,20 @@ Constraints:
 class Solution {
 
   public static void main(String[] args) {
+    Solution solution = new Solution();
+    var list1 = createList(10,1,13,6,9,5);
+    printList(list1);
+    var list2 = createList(1000000,1000001,10000020);
+    printList(list2);
+    var list0 = solution.mergeInBetween(list1, 3, 4, list2);
+    printList(list0);
 
+    list1 = createList(0,1,2,3,4,5,6);
+    printList(list1);
+    list2 = createList(1000000,1000001,1000002,1000003,1000004);
+    printList(list2);
+    list0 = solution.mergeInBetween(list1, 2, 5, list2);
+    printList(list0);
   }
 
   public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {

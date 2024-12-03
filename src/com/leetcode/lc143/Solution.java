@@ -1,5 +1,8 @@
 package com.leetcode.lc143;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
+
 /*
 143. Reorder List
 
@@ -36,10 +39,7 @@ public class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    ListNode head = null;
-    for (int i = 5; i >= 1; i--) {
-      head = new ListNode(i, head);
-    }
+    ListNode head = createList(1, 2, 3, 4, 5);
     printList(head, " > ");
     solution.reorderList(head);
     printList(head, " > ");
@@ -74,16 +74,4 @@ public class Solution {
       secondList = tmp2;
     }
   }
-
-  public static void printList(ListNode head, String div) {
-    ListNode cur = head;
-    String d = "";
-    while (cur != null) {
-      System.out.print(d + cur.val);
-      cur = cur.next;
-      d = div;
-    }
-    System.out.println();
-  }
-
 }

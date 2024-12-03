@@ -1,5 +1,7 @@
 package com.leetcode.lc160;
 
+import com.leetcode.tools.ListNode;
+import static com.leetcode.tools.ListNodeHelper.*;
 import java.util.HashSet;
 /*
 160. Intersection of Two Linked Lists
@@ -73,16 +75,16 @@ public class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    var list0 = solution.createList(8, 4, 5);
+    var list0 = createList(8, 4, 5);
     var list1 = new ListNode(1, list0);
     list1 = new ListNode(4, list1);
-    solution.printList(list1, " > ");
+    printList(list1, " > ");
     var list2 = new ListNode(1, list0);
     list2 = new ListNode(6, list2);
     list2 = new ListNode(5, list2);
-    solution.printList(list2, " > ");
+    printList(list2, " > ");
     var list = solution.getIntersectionNode(list1, list2);
-    solution.printList(list, " > ");
+    printList(list, " > ");
   }
 
   public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
@@ -100,34 +102,5 @@ public class Solution {
       current = current.next;
     }
     return null;
-  }
-
-  public ListNode createList(int... elements) {
-    ListNode head = null;
-    if (elements.length > 0) {
-      head = new ListNode(elements[0]);
-    }
-    ListNode current = head;
-    for (int i = 1; i < elements.length; i++) {
-      current.next = new ListNode(elements[i]);
-      current = current.next;
-    }
-
-    return head;
-  }
-
-  public void printList(ListNode head, String delimiter) {
-    if (head == null) {
-      System.out.println();
-      return;
-    }
-    ListNode current = head;
-    var delim = "";
-    while (current != null) {
-      System.out.print(delim + current.val);
-      delim = delimiter == null ? "->" : delimiter;
-      current = current.next;
-    }
-    System.out.println();
   }
 }
