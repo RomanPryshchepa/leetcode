@@ -1,8 +1,11 @@
 package com.leetcode.lc160;
 
 import com.leetcode.tools.ListNode;
+
 import static com.leetcode.tools.ListNodeHelper.*;
+
 import java.util.HashSet;
+import java.util.Stack;
 /*
 160. Intersection of Two Linked Lists
 
@@ -102,5 +105,25 @@ public class Solution {
       current = current.next;
     }
     return null;
+  }
+
+  public ListNode getIntersectionNode2(ListNode headA, ListNode headB) {
+    var stackA = new Stack<ListNode>();
+    var stackB = new Stack<ListNode>();
+    var curr = headA;
+    while (curr != null) {
+      stackA.push(curr);
+      curr = curr.next;
+    }
+    curr = headB;
+    while (curr != null) {
+      stackB.push(curr);
+      curr = curr.next;
+    }
+    while (!stackA.isEmpty() && !stackB.isEmpty() && stackA.peek() == stackB.peek()) {
+      curr = stackA.pop();
+      stackB.pop();
+    }
+    return curr;
   }
 }
