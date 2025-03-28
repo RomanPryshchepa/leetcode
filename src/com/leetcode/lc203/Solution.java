@@ -1,6 +1,7 @@
 package com.leetcode.lc203;
 
 import com.leetcode.tools.ListNode;
+
 import static com.leetcode.tools.ListNodeHelper.*;
 
 /*
@@ -35,9 +36,14 @@ Constraints:
  */
 
 /**
- * Definition for singly-linked list. public class ListNode { int val; ListNode next; ListNode() {}
- * ListNode(int val) { this.val = val; } ListNode(int val, ListNode next) { this.val = val;
- * this.next = next; } }
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
  */
 public class Solution {
 
@@ -81,6 +87,21 @@ public class Solution {
         prev = prev.next;
       }
       current = current.next;
+    }
+    return head;
+  }
+
+  public ListNode removeElements2(ListNode head, int val) {
+    while (head != null && head.val == val) {
+      head = head.next;
+    }
+    var curr = head;
+    while (curr != null && curr.next != null) {
+      if (curr.next.val == val) {
+        curr.next = curr.next.next;
+      } else {
+        curr = curr.next;
+      }
     }
     return head;
   }
