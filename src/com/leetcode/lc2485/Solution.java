@@ -34,8 +34,6 @@ Explanation: It can be proved that no such integer exist.
 Constraints:
 
     1 <= n <= 1000
-
-
  */
 public class Solution {
 
@@ -68,5 +66,13 @@ public class Solution {
       }
     }
     return leftSum == rightSum && leftPointer == rightPointer ? leftPointer : -1;
+  }
+
+  public int pivotInteger2(int n) {
+    for (var i = 1; i <= n; i++) {
+      if (2 * i * i == n * (n + 1)) // ((1 + i) * i / 2 == (1 + n) * n / 2 - (1 + i) * i / 2 + i)
+        return i;
+    }
+    return -1;
   }
 }
