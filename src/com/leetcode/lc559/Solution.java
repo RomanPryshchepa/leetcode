@@ -61,4 +61,10 @@ class Solution {
     }
     return Collections.max(heights) + 1;
   }
+
+  public int maxDepth2(Node root) {
+    if (root == null) return 0;
+    if (root.children.isEmpty()) return 1;
+    return 1 + Collections.max(root.children.stream().map(this::maxDepth2).toList());
+  }
 }
