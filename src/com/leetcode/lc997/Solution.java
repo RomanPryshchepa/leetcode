@@ -57,14 +57,33 @@ public class Solution {
     n = 2;
     trust = new int[][]{{1, 2}};
     System.out.println(solution.findJudge(n, trust)); // Output: 2
+    System.out.println(solution.findJudge2(n, trust)); // Output: 2
 
     n = 3;
     trust = new int[][]{{1, 3}, {2, 3}};
     System.out.println(solution.findJudge(n, trust)); // Output: 3
+    System.out.println(solution.findJudge2(n, trust)); // Output: 3
 
     n = 3;
     trust = new int[][]{{1, 3}, {2, 3}, {3, 1}};
     System.out.println(solution.findJudge(n, trust)); // Output: -1
+    System.out.println(solution.findJudge2(n, trust)); // Output: -1
+  }
+
+  public int findJudge2(int n, int[][] trust) {
+    var peopleTrustCount = new int[n];
+    var selfTrustCount = new int[n];
+    for (int[] ints : trust) {
+      peopleTrustCount[ints[0] - 1]++;
+      selfTrustCount[ints[1] - 1]++;
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (peopleTrustCount[i] == 0 && selfTrustCount[i] == n - 1) {
+        return i + 1;
+      }
+    }
+    return -1;
   }
 
   public int findJudge(int n, int[][] trust) {
