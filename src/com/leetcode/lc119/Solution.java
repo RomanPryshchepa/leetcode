@@ -47,22 +47,24 @@ public class Solution {
   }
 
   public List<Integer> getRow(int rowIndex) {
-    var result = new ArrayList<ArrayList<Integer>>();
-    var list = new ArrayList<Integer>();
-    list.add(1);
-    result.add(new ArrayList<>(list));
     if (rowIndex == 0) {
-      return list;
+      return List.of(1);
     }
-    for (int i = 1; i <= rowIndex; i++) {
-      list.clear();
-      list.add(1);
-      for (int j = 1; j < i; j++) {
-        list.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
+    if (rowIndex == 1) {
+      return List.of(1, 1);
+    }
+    var list = new ArrayList<List<Integer>>();
+    list.add(List.of(1));
+    list.add(List.of(1, 1));
+    for (int i = 1; i < rowIndex; i++) {
+      var currList = new ArrayList<Integer>();
+      currList.add(1);
+      for (int j = 1; j < list.get(i).size(); j++) {
+        currList.add(list.get(i).get(j - 1) + list.get(i).get(j));
       }
-      list.add(1);
-      result.add(new ArrayList<>(list));
+      currList.add(1);
+      list.add(currList);
     }
-    return result.get(result.size() - 1);
+    return list.get(rowIndex);
   }
 }
