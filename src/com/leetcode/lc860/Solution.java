@@ -46,12 +46,15 @@ public class Solution {
 
     bills = new int[]{5, 5, 5, 10, 20};
     System.out.println(solution.lemonadeChange(bills)); // true
+    System.out.println(solution.lemonadeChange2(bills)); // true
 
     bills = new int[]{5, 5, 10, 10, 20};
     System.out.println(solution.lemonadeChange(bills)); // false
+    System.out.println(solution.lemonadeChange2(bills)); // false
 
     bills = new int[]{5, 10, 20};
     System.out.println(solution.lemonadeChange(bills)); // false
+    System.out.println(solution.lemonadeChange2(bills)); // false
   }
 
   public boolean lemonadeChange(int[] bills) {
@@ -81,6 +84,32 @@ public class Solution {
       }
       if (bill != 0) {
         return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean lemonadeChange2(int[] bills) {
+    var count5 = 0;
+    var count10 = 0;
+    for ( var bill : bills ) {
+      if (bill == 5)
+        count5++;
+      if (bill == 10) {
+        if (count5 == 0)
+          return false;
+        count10++;
+        count5--;
+      }
+      if (bill == 20) {
+        if ((count5 < 3 && count10 == 0) || count5 == 0)
+          return false;
+        if (count10 > 0) {
+          count10--;
+          count5--;
+        } else {
+          count5 -= 3;
+        }
       }
     }
     return true;
