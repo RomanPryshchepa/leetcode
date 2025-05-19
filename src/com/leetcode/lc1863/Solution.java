@@ -65,12 +65,31 @@ public class Solution {
 
     nums = new int[]{1, 3};
     System.out.println(solution.subsetXORSum(nums)); // 6
+    System.out.println(solution.subsetXORSum2(nums)); // 6
 
     nums = new int[]{5, 1, 6};
     System.out.println(solution.subsetXORSum(nums)); // 28
+    System.out.println(solution.subsetXORSum2(nums)); // 28 34???
 
     nums = new int[]{3, 4, 5, 6, 7, 8};
     System.out.println(solution.subsetXORSum(nums)); // 480
+    System.out.println(solution.subsetXORSum2(nums)); // 480 514???
+  }
+
+  private int XORSum = 0;
+
+  public int subsetXORSum2(int[] nums) {
+    step(nums, 0, 0);
+    return XORSum;
+  }
+
+  private void step(int[] nums, int index, int sum) {
+    XORSum += sum;
+    for (int i = index; i < nums.length; i++) {
+      sum ^= nums[i];
+      step(nums, i + 1, sum);
+      sum ^= nums[i];
+    }
   }
 
   public int subsetXORSum(int[] nums) {
