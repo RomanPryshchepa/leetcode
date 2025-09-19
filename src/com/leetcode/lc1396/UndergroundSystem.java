@@ -1,5 +1,6 @@
 package com.leetcode.lc1396;
 
+import com.leetcode.tools.Pair;
 import java.util.HashMap;
 
 /**
@@ -23,11 +24,11 @@ class UndergroundSystem {
 
   public void checkOut(int id, String stationName, int t) {
     if (checkInStations.containsKey(id)) {
-      var startStation = checkInStations.get(id).firstItem;
-      var startTime = checkInStations.get(id).secondItem;
+      var startStation = checkInStations.get(id).firstItem();
+      var startTime = checkInStations.get(id).secondItem();
       if (stations.containsKey(startStation + "-" + stationName)) {
-        var time = stations.get(startStation + "-" + stationName).firstItem;
-        var count = stations.get(startStation + "-" + stationName).secondItem;
+        var time = stations.get(startStation + "-" + stationName).firstItem();
+        var count = stations.get(startStation + "-" + stationName).secondItem();
         stations.put(startStation + "-" + stationName, new Pair<>(time + t - startTime, count + 1));
       } else {
         stations.put(startStation + "-" + stationName, new Pair<>(t - startTime, 1));
@@ -38,13 +39,9 @@ class UndergroundSystem {
 
   public double getAverageTime(String startStation, String endStation) {
     if (stations.containsKey(startStation + "-" + endStation)) {
-      return stations.get(startStation + "-" + endStation).firstItem / (1.0d * stations.get(
-          startStation + "-" + endStation).secondItem);
+      return stations.get(startStation + "-" + endStation).firstItem() / (1.0d * stations.get(
+          startStation + "-" + endStation).secondItem());
     }
     return 0;
-  }
-
-  record Pair<T, U>(T firstItem, U secondItem) {
-
   }
 }
