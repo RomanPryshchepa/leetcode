@@ -37,11 +37,12 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(Arrays.deepToString(solution.matrixBlockSum(new int[][]{{1,2,3},{4,5,6},{7,8,9}}, 1)));
+    System.out.println(Arrays.deepToString(solution.matrixBlockSum2(new int[][]{{1,2,3},{4,5,6},{7,8,9}}, 1)));
     System.out.println(Arrays.deepToString(solution.matrixBlockSum(new int[][]{{1,2,3},{4,5,6},{7,8,9}}, 2)));
+    System.out.println(Arrays.deepToString(solution.matrixBlockSum2(new int[][]{{1,2,3},{4,5,6},{7,8,9}}, 2)));
   }
 
   public int[][] matrixBlockSum(int[][] mat, int k) {
-
     var result = new int[mat.length][];
     for (int i = 0; i < mat.length; i++) {
       result[i] = new int[mat[i].length];
@@ -50,6 +51,30 @@ public class Solution {
       }
     }
     return result;
+  }
+
+  public int[][] matrixBlockSum2(int[][] mat, int k) {
+    var prefSum = new int[mat.length + 1][mat[0].length + 1];
+    for (int i = 0; i < mat.length; i++) {
+      for (int j = 0; j < mat[i].length; j++) {
+        prefSum[i + 1][j + 1] = prefSum[i + 1][j] + prefSum[i][j + 1] + mat[i][j] - prefSum[i][j];
+      }
+    }
+    var maxI = 0;
+    var minI = 0;
+    var maxJ = 0;
+    var minJ = 0;
+    var answer = new int[mat.length][mat[0].length];
+    for (int i = 0; i < answer.length; i++) {
+      for (int j = 0; j < answer[i].length; j++) {
+        maxI = Math.min(i + k + 1, prefSum.length - 1);
+        minI = Math.max(i - k, 0);
+        maxJ = Math.min(j + k + 1, prefSum[i].length - 1);
+        minJ = Math.max(j - k, 0);
+        answer[i][j] = prefSum[maxI][maxJ] - prefSum[maxI][minJ] - prefSum[minI][maxJ] + prefSum[minI][minJ];
+      }
+    }
+    return answer;
   }
 
   private int sumK(int[][] mat, int i, int j, int k) {
