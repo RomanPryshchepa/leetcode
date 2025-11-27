@@ -28,6 +28,9 @@ Constraints:
     root is a binary search tree.
     1 <= val <= 10^7
  */
+
+import com.leetcode.tools.TreeNode;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -47,9 +50,10 @@ class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    TreeNode root;
-    int val;
-
+    var root = new TreeNode(4, new TreeNode(2, new TreeNode(1), new TreeNode(3)), new TreeNode(7));
+    TreeNode result = solution.searchBST(root, 2);
+    System.out.println(result.val + ", " + result.left.val + ", " + result.right.val);
+    System.out.println(solution.searchBST(root, 5));
   }
 
   public TreeNode searchBST(TreeNode root, int val) {
