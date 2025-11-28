@@ -1,6 +1,7 @@
 package com.leetcode.lc876;
 
 import com.leetcode.tools.ListNode;
+
 import static com.leetcode.tools.ListNodeHelper.*;
 
 /*
@@ -46,22 +47,45 @@ class Solution {
     head = createList(1, 2, 3, 4, 5);
     printList(head);
     printList(solution.middleNode(head));
+    printList(solution.middleNode2(head));
+    System.out.println();
 
     head = createList(1, 2, 3, 4, 5, 6);
     printList(head);
     printList(solution.middleNode(head));
+    printList(solution.middleNode2(head));
+    System.out.println();
 
     head = createList(1);
     printList(head);
     printList(solution.middleNode(head));
+    printList(solution.middleNode2(head));
+    System.out.println();
 
     head = createList(1, 2);
     printList(head);
     printList(solution.middleNode(head));
+    printList(solution.middleNode2(head));
+    System.out.println();
 
     head = createList();
     printList(head);
     printList(solution.middleNode(head));
+    printList(solution.middleNode2(head));
+  }
+
+  public ListNode middleNode2(ListNode head) { // SlowFast
+    var curr = head;
+    var curr2x = head;
+    while (curr2x != null) {
+      if (curr2x.next != null) {
+        curr2x = curr2x.next.next;
+      } else {
+        break;
+      }
+      curr = curr.next;
+    }
+    return curr;
   }
 
   public ListNode middleNode(ListNode head) {
