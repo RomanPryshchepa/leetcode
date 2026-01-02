@@ -48,8 +48,11 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.destCity(List.of(List.of("London","New York"), List.of("New York","Lima"), List.of("Lima","Sao Paulo"))));
+        System.out.println(solution.destCity2(List.of(List.of("London","New York"), List.of("New York","Lima"), List.of("Lima","Sao Paulo"))));
         System.out.println(solution.destCity(List.of(List.of("B","C"), List.of("D","B"), List.of("C","A"))));
+        System.out.println(solution.destCity2(List.of(List.of("B","C"), List.of("D","B"), List.of("C","A"))));
         System.out.println(solution.destCity(List.of(List.of("A","Z"))));
+        System.out.println(solution.destCity2(List.of(List.of("A","Z"))));
     }
 
     public String destCity(List<List<String>> paths) {
@@ -63,5 +66,22 @@ public class Solution {
             if (!beginning.contains(dest))
                 return dest;
         return "";
+    }
+
+    public String destCity2(List<List<String>> paths) {
+        var destination = paths.getFirst().getLast();
+        if (paths.size() > 1) {
+            var isChanged = true;
+            while (isChanged) {
+                isChanged = false;
+                for (List<String> path : paths) {
+                    if (path.getFirst().equals(destination)) {
+                        destination = path.getLast();
+                        isChanged = true;
+                    }
+                }
+            }
+        }
+        return destination;
     }
 }
