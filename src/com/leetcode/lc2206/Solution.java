@@ -43,13 +43,25 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.divideArray(new int[] {3,2,3,2,2,2}));
+        System.out.println(solution.divideArray2(new int[] {3,2,3,2,2,2}));
         System.out.println(solution.divideArray(new int[] {1,2,3,4}));
+        System.out.println(solution.divideArray2(new int[] {1,2,3,4}));
     }
 
     public boolean divideArray(int[] nums) {
         Arrays.sort(nums);
         for (var i = 0; i < nums.length; i += 2)
             if (nums[i] != nums[i + 1])
+                return false;
+        return true;
+    }
+
+    public boolean divideArray2(int[] nums) {
+        var arr = new int[501];
+        for (var num : nums)
+            arr[num]++;
+        for (var num : arr)
+            if (num % 2 != 0)
                 return false;
         return true;
     }
