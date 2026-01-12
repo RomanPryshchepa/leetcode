@@ -41,9 +41,13 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.findKthPositive(new int[]{2, 3, 4, 7, 11}, 5));
+    System.out.println(solution.findKthPositive2(new int[]{2, 3, 4, 7, 11}, 5));
     System.out.println(solution.findKthPositive(new int[]{1, 2, 3, 4}, 2));
+    System.out.println(solution.findKthPositive2(new int[]{1, 2, 3, 4}, 2));
     System.out.println(solution.findKthPositive(new int[]{1}, 1000));
+    System.out.println(solution.findKthPositive2(new int[]{1}, 1000));
     System.out.println(solution.findKthPositive(new int[]{1, 1000}, 1000));
+    System.out.println(solution.findKthPositive2(new int[]{1, 1000}, 1000));
   }
 
   public int findKthPositive(int[] arr, int k) {
@@ -58,5 +62,18 @@ public class Solution {
       j++;
     }
     return --j + k;
+  }
+
+  public int findKthPositive2(int[] arr, int k) {
+    var i = 0;
+    var cnt = 0;
+    while (k > 0) {
+      cnt++;
+      if (i < arr.length && arr[i] == cnt)
+        i++;
+      else
+        k--;
+    }
+    return cnt;
   }
 }
