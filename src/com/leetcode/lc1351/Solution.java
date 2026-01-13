@@ -34,9 +34,25 @@ public class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    System.out.println(solution.countNegatives(
-        new int[][]{{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}}));
+    System.out.println(solution.countNegatives(new int[][]{{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}}));
+    System.out.println(solution.countNegatives2(new int[][]{{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}}));
     System.out.println(solution.countNegatives(new int[][]{{3, 2}, {1, 0}}));
+    System.out.println(solution.countNegatives2(new int[][]{{3, 2}, {1, 0}}));
+  }
+
+  public int countNegatives2(int[][] grid) {
+    var i = 0;
+    var j = grid[i].length - 1;
+    var result = 0;
+    while(i < grid.length && j >= 0) {
+      if (grid[i][j] >= 0)
+        result += grid[i++].length - j - 1;
+      else if (j > 0)
+        j--;
+      else
+        return result + grid[i].length * (grid.length - i);
+    }
+    return result;
   }
 
   public int countNegatives(int[][] grid) {
