@@ -45,8 +45,11 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.reversePrefix("abcdefd", 'd'));
+    System.out.println(solution.reversePrefix2("abcdefd", 'd'));
     System.out.println(solution.reversePrefix("xyxzxe", 'z'));
+    System.out.println(solution.reversePrefix2("xyxzxe", 'z'));
     System.out.println(solution.reversePrefix("abcd", 'z'));
+    System.out.println(solution.reversePrefix2("abcd", 'z'));
   }
 
   public String reversePrefix(String word, char ch) {
@@ -57,5 +60,16 @@ public class Solution {
     var res = new StringBuilder(word.substring(0, chIdx + 1)).reverse();
     res.append(word.substring(chIdx + 1));
     return res.toString();
+  }
+
+  public String reversePrefix2(String word, char ch) {
+    var posCh = word.indexOf(ch);
+    if (posCh <= 0)
+      return word;
+    var sb = new StringBuilder();
+    for (var i = posCh; i >= 0; i--)
+      sb.append(word.charAt(i));
+    sb.append(word.substring(posCh + 1));
+    return sb.toString();
   }
 }
