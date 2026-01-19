@@ -54,8 +54,19 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.missingNumber(new int[]{3, 0, 1}));
+    System.out.println(solution.missingNumber2(new int[]{3, 0, 1}));
     System.out.println(solution.missingNumber(new int[]{0, 1}));
+    System.out.println(solution.missingNumber2(new int[]{0, 1}));
     System.out.println(solution.missingNumber(new int[]{9, 6, 4, 2, 3, 5, 7, 0, 1}));
+    System.out.println(solution.missingNumber2(new int[]{9, 6, 4, 2, 3, 5, 7, 0, 1}));
+  }
+
+  public int missingNumber2(int[] nums) {
+    var sum = 0;
+    for (int num : nums) {
+      sum += num;
+    }
+    return (nums.length + 1) * nums.length / 2 - sum;
   }
 
   public int missingNumber(int[] nums) {
