@@ -61,6 +61,7 @@ public class Solution {
     printList(head2, " > ");
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
+    printList(solution.mergeTwoLists3(head1, head2), " > ");
 
     head1 = createList();
     head2 = createList();
@@ -75,6 +76,22 @@ public class Solution {
     printList(head2, " > ");
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
+
+    head1 = createList(1, 2, 3);
+    head2 = createList(4, 5, 6);
+    printList(head1, " > ");
+    printList(head2, " > ");
+    printList(solution.mergeTwoLists(head1, head2), " > ");
+    printList(solution.mergeTwoLists2(head1, head2), " > ");
+    printList(solution.mergeTwoLists3(head1, head2), " > ");
+
+    head1 = createList(4, 5, 6);
+    head2 = createList(1, 2, 3);
+    printList(head1, " > ");
+    printList(head2, " > ");
+    printList(solution.mergeTwoLists(head1, head2), " > ");
+    printList(solution.mergeTwoLists2(head1, head2), " > ");
+    printList(solution.mergeTwoLists3(head1, head2), " > ");
   }
 
   public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -162,6 +179,35 @@ public class Solution {
           current.next = new ListNode(current2.val);
           current2 = current2.next;
         }
+      }
+      current = current.next;
+    }
+    return result;
+  }
+
+  public ListNode mergeTwoLists3(ListNode list1, ListNode list2) {
+    if (list1 == null)
+      return list2;
+    if (list2 == null)
+      return list1;
+    var current1 = list1;
+    var current2 = list2;
+    ListNode result;
+    if (current1.val < current2.val) {
+      result = new ListNode(current1.val);
+      current1 = current1.next;
+    } else {
+      result = new ListNode(current2.val);
+      current2 = current2.next;
+    }
+    ListNode current = result;
+    while (current1 != null || current2 != null) {
+      if (current2 == null || current1 != null && current1.val < current2.val) {
+        current.next = new ListNode(current1.val);
+        current1 = current1.next;
+      } else if (current1 == null || current2.val <= current1.val) {
+        current.next = new ListNode(current2.val);
+        current2 = current2.next;
       }
       current = current.next;
     }
