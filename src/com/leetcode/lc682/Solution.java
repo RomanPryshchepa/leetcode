@@ -69,25 +69,77 @@ Constraints:
     operations[i] is "C", "D", "+", or a string representing an integer in the range [-3 * 104, 3 * 104].
     For operation "+", there will always be at least two previous scores on the record.
     For operations "C" and "D", there will always be at least one previous score on the record.
-
-
  */
 public class Solution {
 
   public static void main(String[] args) {
+    var solution = new Solution();
     String[] ops;
 
     ops = new String[]{"5", "2", "C", "D", "+"};
-    System.out.println(calPoints(ops));
+    System.out.println(solution.calPoints(ops));
+    System.out.println(solution.calPoints2(ops));
+    System.out.println(solution.calPoints3(ops));
 
     ops = new String[]{"5", "-2", "4", "C", "D", "9", "+", "+"};
-    System.out.println(calPoints(ops));
+    System.out.println(solution.calPoints(ops));
+    System.out.println(solution.calPoints2(ops));
+    System.out.println(solution.calPoints3(ops));
 
     ops = new String[]{"1", "C"};
-    System.out.println(calPoints(ops));
+    System.out.println(solution.calPoints(ops));
+    System.out.println(solution.calPoints2(ops));
+    System.out.println(solution.calPoints3(ops));
   }
 
-  public static int calPoints(String[] operations) {
+  public int calPoints3(String[] operations) {
+    var stack = new LinkedList<Integer>();
+    int sum = 0;
+    int sumTmp;
+    for (String operation : operations) {
+      if ("C".equals(operation)) {
+        sum -= stack.pop();
+      } else {
+        if ("+".equals(operation)) {
+          sumTmp = stack.pop() + stack.peek();
+          stack.push(sumTmp - stack.peek());
+          stack.push(sumTmp);
+        }
+        else if ("D".equals(operation))
+          stack.push(stack.peek() * 2);
+        else
+          stack.push(Integer.parseInt(operation));
+        sum += stack.peek();
+      }
+    }
+    return sum;
+  }
+
+  public int calPoints2(String[] operations) {
+    Deque<Integer> stack = new LinkedList<>();
+    for (String operation : operations) {
+      switch (operation) {
+        case "C":
+          stack.remove();
+          break;
+        case "D":
+          stack.push(stack.peek() * 2);
+          break;
+        case "+":
+          Integer el1 = stack.pop();
+          Integer el2 = stack.peek();
+          stack.push(el1);
+          stack.push(el1 + el2);
+          break;
+        default:
+          stack.push(Integer.parseInt(operation));
+          break;
+      }
+    }
+    return stack.stream().reduce(0, Integer::sum);
+  }
+
+  public int calPoints(String[] operations) {
     Deque<Integer> stack = new LinkedList<>();
     for (String operation : operations) {
       if (operation.equals("+")) {
@@ -102,7 +154,6 @@ public class Solution {
       } else {
         stack.addLast(Integer.valueOf(operation));
       }
-      System.out.println(stack);
     }
     int res = 0;
     for (Integer i : stack) {
