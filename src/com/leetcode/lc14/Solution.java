@@ -36,12 +36,15 @@ public class Solution {
 
     strs = new String[]{"flower", "flow", "flight"};
     System.out.println(solution.longestCommonPrefix(strs)); // "fl"
+    System.out.println(solution.longestCommonPrefix2(strs)); // "fl"
 
     strs = new String[]{"dog", "racecar", "car"};
     System.out.println(solution.longestCommonPrefix(strs)); // ""
+    System.out.println(solution.longestCommonPrefix2(strs)); // ""
 
     strs = new String[]{"d1og", "d2og1", "d3og2", "d4og3", "d5og4"};
-    System.out.println(solution.longestCommonPrefix(strs)); // ""
+    System.out.println(solution.longestCommonPrefix(strs)); // "d"
+    System.out.println(solution.longestCommonPrefix2(strs)); // "d"
   }
 
   public String longestCommonPrefix(String[] strs) {
@@ -49,11 +52,9 @@ public class Solution {
       return strs[0];
     }
     int minLength = Integer.MAX_VALUE;
-    for (int i = 0; i < strs.length; i++) {
-      if (strs[i].length() < minLength) {
-        minLength = strs[i].length();
-      }
-    }
+    for (String str : strs)
+        if (str.length() < minLength)
+            minLength = str.length();
     for (int i = 0; i < minLength; i++) {
       char c = strs[0].charAt(i);
       for (int j = 1; j < strs.length; j++) {
@@ -63,5 +64,19 @@ public class Solution {
       }
     }
     return strs[0].substring(0, minLength);
+  }
+
+  public String longestCommonPrefix2(String[] strs) {
+    if (strs.length == 1 || strs[0].isEmpty())
+      return strs[0];
+    var sb = new StringBuilder();
+    for (var i = 0; i < strs[0].length(); i++) {
+      for (var j = 1; j <  strs.length; j++) {
+        if (strs[j].length() <= i || strs[j].charAt(i) != strs[0].charAt(i))
+          return sb.toString();
+      }
+      sb.append(strs[0].charAt(i));
+    }
+    return sb.toString();
   }
 }
