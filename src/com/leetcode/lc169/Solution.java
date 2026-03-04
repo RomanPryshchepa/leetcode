@@ -1,6 +1,7 @@
 package com.leetcode.lc169;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 /*
 169. Majority Element
@@ -37,11 +38,29 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.majorityElement(new int[]{3, 2, 3}));
+    System.out.println(solution.majorityElement2(new int[]{3, 2, 3}));
     System.out.println(solution.majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2}));
+    System.out.println(solution.majorityElement2(new int[]{2, 2, 1, 1, 1, 2, 2}));
   }
 
   public int majorityElement(int[] nums) {
     Arrays.sort(nums);
     return nums[nums.length / 2];
+  }
+
+  public int majorityElement2(int[] nums) {
+    var maxCnt = 0;
+    var map = new HashMap<Integer, Integer>();
+    for (var num : nums) {
+      if (map.containsKey(num))
+        map.put(num, map.get(num) + 1);
+      else
+        map.put(num, 1);
+      if (map.get(num) > maxCnt)
+        maxCnt = map.get(num);
+      if (maxCnt > nums.length / 2)
+        return num;
+    }
+    return 0;
   }
 }
