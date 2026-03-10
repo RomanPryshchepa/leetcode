@@ -41,10 +41,12 @@ public class Solution {
     s = "anagram";
     t = "nagaram";
     System.out.println(solution.isAnagram(s, t)); // true
+    System.out.println(solution.isAnagram2(s, t)); // true
 
     s = "rat";
     t = "car";
     System.out.println(solution.isAnagram(s, t)); // false
+    System.out.println(solution.isAnagram2(s, t)); // false
   }
 
   public boolean isAnagram(String s, String t) {
@@ -56,5 +58,19 @@ public class Solution {
     Arrays.sort(sCharArray);
     Arrays.sort(tCharArray);
     return Arrays.equals(sCharArray, tCharArray);
+  }
+
+  public boolean isAnagram2(String s, String t) {
+    if (s.length() != t.length())
+      return false;
+    var letterCnt = new int[26];
+    for (var ch : s.toCharArray())
+      letterCnt[ch - 'a']++;
+    for (var ch : t.toCharArray())
+      letterCnt[ch - 'a']--;
+    for (var cnt : letterCnt)
+      if (cnt != 0)
+        return false;
+    return true;
   }
 }
