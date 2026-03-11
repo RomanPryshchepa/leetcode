@@ -81,7 +81,7 @@ public class Solution {
     int[] left = Arrays.copyOfRange(nums, 0, nums.length / 2);
     int[] right = Arrays.copyOfRange(nums, nums.length / 2, nums.length);
 
-    merge(sortArrayI(left), sortArrayI(right), nums);
+    merge(sortArrayM(left), sortArrayM(right), nums);
     return nums;
   }
 
