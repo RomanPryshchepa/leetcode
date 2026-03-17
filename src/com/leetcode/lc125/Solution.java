@@ -39,19 +39,22 @@ Constraints:
 public class Solution {
 
   public static void main(String[] args) {
+    var solution = new Solution();
     //Example 1:
     //
     //Input: s = "A man, a plan, a canal: Panama"
     //Output: true
     //Explanation: "amanaplanacanalpanama" is a palindrome.
-    System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+    System.out.println(solution.isPalindrome("A man, a plan, a canal: Panama"));
+    System.out.println(solution.isPalindrome2("A man, a plan, a canal: Panama"));
 
     //Example 2:
     //
     //Input: s = "race a car"
     //Output: false
     //Explanation: "raceacar" is not a palindrome.
-    System.out.println(isPalindrome("race a car"));
+    System.out.println(solution.isPalindrome("race a car"));
+    System.out.println(solution.isPalindrome2("race a car"));
 
     //Example 3:
     //
@@ -59,38 +62,38 @@ public class Solution {
     //Output: true
     //Explanation: s is an empty string "" after removing non-alphanumeric characters.
     //Since an empty string reads the same forward and backward, it is a palindrome.
-    System.out.println(isPalindrome(" "));
+    System.out.println(solution.isPalindrome(" "));
+    System.out.println(solution.isPalindrome2(" "));
     System.out.println("=================");
-    System.out.println(isPalindrome("aa"));
-    System.out.println(isPalindrome("aaa"));
-    System.out.println(isPalindrome("aaaa"));
-    System.out.println(isPalindrome("dsa,asd"));
-    System.out.println(isPalindrome("a,b,a"));
-    System.out.println(isPalindrome("+-"));
+    System.out.println(solution.isPalindrome("aa"));
+    System.out.println(solution.isPalindrome2("aa"));
+    System.out.println(solution.isPalindrome("aaa"));
+    System.out.println(solution.isPalindrome2("aaa"));
+    System.out.println(solution.isPalindrome("aaaa"));
+    System.out.println(solution.isPalindrome2("aaaa"));
+    System.out.println(solution.isPalindrome("dsa,asd"));
+    System.out.println(solution.isPalindrome2("dsa,asd"));
+    System.out.println(solution.isPalindrome("a,b,a"));
+    System.out.println(solution.isPalindrome2("a,b,a"));
+    System.out.println(solution.isPalindrome("+-"));
+    System.out.println(solution.isPalindrome2("+-"));
   }
 
-  public static boolean isPalindrome(String s) {
-    char[] charArray = s.toLowerCase().toCharArray();
-    int i = 0;
-    int j = charArray.length - 1;
-    while (i < j && i < charArray.length && j >= 0) {
-      while (i < charArray.length && i < j && !Character.isLetterOrDigit(charArray[i])) {
-        i++;
-      }
-      while (j >= 0 && i < j && !Character.isLetterOrDigit(charArray[j])) {
-        j--;
-      }
-      if (charArray[i] != charArray[j]) {
+  public boolean isPalindrome(String s) {
+    var lPointer = 0;
+    var rPointer = s.length() - 1;
+    while (lPointer < rPointer) {
+      while (lPointer < s.length() && !Character.isLetterOrDigit(s.charAt(lPointer)))
+        lPointer++;
+      while (rPointer >= 0 && !Character.isLetterOrDigit(s.charAt(rPointer)))
+        rPointer--;
+      if (lPointer < s.length() && rPointer >= 0 && Character.toLowerCase(s.charAt(lPointer++)) != Character.toLowerCase(s.charAt(rPointer--)))
         return false;
-      } else {
-        i++;
-        j--;
-      }
     }
     return true;
   }
 
-  public static boolean isPalindrome1(String s) {
+  public boolean isPalindrome2(String s) {
     s = s.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase();
     return new StringBuilder(s).reverse().toString().equals(s);
   }
