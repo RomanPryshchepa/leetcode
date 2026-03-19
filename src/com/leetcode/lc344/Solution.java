@@ -37,8 +37,16 @@ public class Solution {
         solution.reverseString(s);
         System.out.println(Arrays.toString(s));
 
+        s = new char[]{'h','e','l','l','o'};
+        solution.reverseString2(s);
+        System.out.println(Arrays.toString(s));
+
         s = new char[]{'H','a','n','n','a','h'};
         solution.reverseString(s);
+        System.out.println(Arrays.toString(s));
+
+        s = new char[]{'H','a','n','n','a','h'};
+        solution.reverseString2(s);
         System.out.println(Arrays.toString(s));
     }
 
@@ -49,6 +57,19 @@ public class Solution {
                 s[s.length - i - 1] = (char)((int)s[i] - (int)s[s.length - i - 1]);
                 s[i] -= s[s.length - i - 1];
             }
+        }
+    }
+
+    public void reverseString2(char[] s) {
+        var left = 0;
+        var right = s.length - 1;
+        char tmp;
+        while (left < right) {
+            tmp = s[left];
+            s[left] = s[right];
+            s[right] = tmp;
+            left++;
+            right--;
         }
     }
 }
