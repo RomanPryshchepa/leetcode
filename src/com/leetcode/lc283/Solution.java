@@ -41,32 +41,64 @@ public class Solution {
     solution.moveZeroes(nums);
     System.out.println(Arrays.toString(nums)); // 1, 3, 12, 0, 0
 
+    nums = new int[]{0, 1, 0, 3, 12};
+    solution.moveZeroes2(nums);
+    System.out.println(Arrays.toString(nums)); // 1, 3, 12, 0, 0
+
     nums = new int[]{0};
     solution.moveZeroes(nums);
+    System.out.println(Arrays.toString(nums)); // 0
+
+    nums = new int[]{0};
+    solution.moveZeroes2(nums);
     System.out.println(Arrays.toString(nums)); // 0
 
     nums = new int[]{4, 0, 7, 2, 0, 1, 0, 3, 12};
     solution.moveZeroes(nums);
     System.out.println(Arrays.toString(nums)); // 4, 7, 2, 1, 3, 12, 0, 0, 0
 
+    nums = new int[]{4, 0, 7, 2, 0, 1, 0, 3, 12};
+    solution.moveZeroes2(nums);
+    System.out.println(Arrays.toString(nums)); // 4, 7, 2, 1, 3, 12, 0, 0, 0
+
     nums = new int[]{0, 0, 0};
     solution.moveZeroes(nums);
+    System.out.println(Arrays.toString(nums)); // 0, 0, 0
+
+    nums = new int[]{0, 0, 0};
+    solution.moveZeroes2(nums);
     System.out.println(Arrays.toString(nums)); // 0, 0, 0
 
     nums = new int[]{0, 0, 1};
     solution.moveZeroes(nums);
     System.out.println(Arrays.toString(nums)); // 1, 0, 0
 
+    nums = new int[]{0, 0, 1};
+    solution.moveZeroes2(nums);
+    System.out.println(Arrays.toString(nums)); // 1, 0, 0
+
     nums = new int[]{0, 0, 1, 0};
     solution.moveZeroes(nums);
+    System.out.println(Arrays.toString(nums)); // 1, 0, 0, 0
+
+    nums = new int[]{0, 0, 1, 0};
+    solution.moveZeroes2(nums);
     System.out.println(Arrays.toString(nums)); // 1, 0, 0, 0
 
     nums = new int[]{0, 0, 1, 2, 0};
     solution.moveZeroes(nums);
     System.out.println(Arrays.toString(nums)); // 1, 2, 0, 0, 0
 
+    nums = new int[]{0, 0, 1, 2, 0};
+    solution.moveZeroes2(nums);
+    System.out.println(Arrays.toString(nums)); // 1, 2, 0, 0, 0
+
     nums = new int[]{1, 0, 3, 0, 1, 0, 2, 0, 4};
     solution.moveZeroes(nums);
+    System.out.println(Arrays.toString(nums)); // 1, 3, 1, 2, 4, 0, 0, 0, 0
+
+    nums = new int[]{1, 0, 3, 0, 1, 0, 2, 0, 4};
+    solution.moveZeroes2(nums);
     System.out.println(Arrays.toString(nums)); // 1, 3, 1, 2, 4, 0, 0, 0, 0
   }
 
@@ -96,4 +128,23 @@ public class Solution {
     }
   }
 
+  public void moveZeroes2(int[] nums) {
+    var right = nums.length - 1;
+    var left = nums.length - 1;
+    while (left >= 0) {
+      while (left >= 0 && nums[left] != 0)
+        left--;
+      if (left < 0)
+        break;
+      moveZero(nums, left, right);
+      left--;
+      right--;
+    }
+  }
+
+  private void moveZero(int[] nums, int from, int to) {
+    for (var i = from; i < to; i++)
+      nums[i] = nums[i + 1];
+    nums[to] = 0;
+  }
 }
