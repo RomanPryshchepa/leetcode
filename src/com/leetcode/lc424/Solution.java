@@ -36,6 +36,7 @@ Constraints:
 public class Solution {
 
   public static void main(String[] args) {
+    var solution = new Solution();
     String s;
     int k;
     //Example 1:
@@ -45,7 +46,8 @@ public class Solution {
     //Explanation: Replace the two 'A's with two 'B's or vice versa.
     s = "ABAB";
     k = 2;
-    System.out.println(characterReplacement(s, k));
+    System.out.println(solution.characterReplacement(s, k));
+    System.out.println(solution.characterReplacement2(s, k));
 
     //Example 2:
     //
@@ -56,7 +58,8 @@ public class Solution {
     //There may exists other ways to achieve this answer too.
     s = "AABABBA";
     k = 1;
-    System.out.println(characterReplacement(s, k));
+    System.out.println(solution.characterReplacement(s, k));
+    System.out.println(solution.characterReplacement2(s, k));
 
     //Example 3:
     //
@@ -67,10 +70,11 @@ public class Solution {
     //There may exists other ways to achieve this answer too.
     s = "ABAA";
     k = 0;
-    System.out.println(characterReplacement(s, k));
+    System.out.println(solution.characterReplacement(s, k));
+    System.out.println(solution.characterReplacement2(s, k));
   }
 
-  public static int characterReplacement(String s, int k) {
+  public int characterReplacement(String s, int k) {
     int leftInd = 0;
     var letterDict = new HashMap<Character, Integer>();
     int res = 0;
@@ -95,5 +99,36 @@ public class Solution {
       res = valSum > res ? valSum : res;
     }
     return res;
+  }
+
+  public int characterReplacement2(String s, int k) {
+    var letters = new int[26];
+    var result = 1;
+    var left = 0;
+    var right = 0;
+    var count = 0;
+    while (right < s.length()) {
+      while (right < s.length() && (count - getMaxLetterCount(letters)) <= k) {
+        letters[s.charAt(right++) - 'A']++;
+        count++;
+      }
+      if ((count - getMaxLetterCount(letters)) <= k)
+        result = Math.max(result, count);
+      else
+        result = Math.max(result, count - 1);
+      while (left <= right && (count - getMaxLetterCount(letters)) > k) {
+        letters[s.charAt(left++) - 'A']--;
+        count--;
+      }
+    }
+    return result;
+  }
+
+  private int getMaxLetterCount(int[] letters) {
+    var max = letters[0];
+    for (var elem : letters)
+      if (elem > max)
+        max = elem;
+    return max;
   }
 }
