@@ -39,8 +39,10 @@ public class Solution {
     Solution solution = new Solution();
     System.out.println(solution.majorityElement(new int[]{3, 2, 3}));
     System.out.println(solution.majorityElement2(new int[]{3, 2, 3}));
+    System.out.println(solution.majorityElement3(new int[]{3, 2, 3}));
     System.out.println(solution.majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2}));
     System.out.println(solution.majorityElement2(new int[]{2, 2, 1, 1, 1, 2, 2}));
+    System.out.println(solution.majorityElement3(new int[]{2, 2, 1, 1, 1, 2, 2}));
   }
 
   public int majorityElement(int[] nums) {
@@ -62,5 +64,19 @@ public class Solution {
         return num;
     }
     return 0;
+  }
+
+  public int majorityElement3(int[] nums) {
+    var elem = nums[0];
+    var count = 1;
+    for (var i = 1; i < nums.length; i++) {
+      if (nums[i] == elem)
+        count++;
+      else if (count > 0)
+        count--;
+      else
+        elem = nums[i];
+    }
+    return elem;
   }
 }
