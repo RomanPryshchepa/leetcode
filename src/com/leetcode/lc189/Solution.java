@@ -50,8 +50,16 @@ public class Solution {
         solution.rotate(arr, 3);
         System.out.println(Arrays.toString(arr));
 
+        arr = new int[] {1, 2, 3, 4, 5, 6, 7};
+        solution.rotate2(arr, 3);
+        System.out.println(Arrays.toString(arr));
+
         arr = new int[] {-1, -100, 3, 99};
         solution.rotate(arr, 2);
+        System.out.println(Arrays.toString(arr));
+
+        arr = new int[] {-1, -100, 3, 99};
+        solution.rotate2(arr, 2);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -66,5 +74,22 @@ public class Solution {
             System.arraycopy(tmp, 0, nums, k, nums.length - k);
         if (k >= 0)
             System.arraycopy(tmp, nums.length - k, nums, 0, k);
+    }
+
+    public void rotate2(int[] nums, int k) {
+        if (k % nums.length == 0)
+            return;
+        k %= nums.length;
+        reverse(nums, 0, nums.length);
+        reverse(nums, 0, k);
+        reverse(nums, k, nums.length);
+    }
+
+    private void reverse(int[] nums, int start, int end) {
+        for (var i = start; i < (end + start) / 2; i++) {
+            nums[i] += nums[start + end - i - 1];
+            nums[start + end - i - 1] = nums[i] - nums[start + end - i - 1];
+            nums[i] -= nums[start + end - i - 1];
+        }
     }
 }
