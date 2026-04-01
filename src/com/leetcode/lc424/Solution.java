@@ -48,6 +48,7 @@ public class Solution {
     k = 2;
     System.out.println(solution.characterReplacement(s, k));
     System.out.println(solution.characterReplacement2(s, k));
+    System.out.println(solution.characterReplacement3(s, k));
 
     //Example 2:
     //
@@ -60,6 +61,7 @@ public class Solution {
     k = 1;
     System.out.println(solution.characterReplacement(s, k));
     System.out.println(solution.characterReplacement2(s, k));
+    System.out.println(solution.characterReplacement3(s, k));
 
     //Example 3:
     //
@@ -72,6 +74,7 @@ public class Solution {
     k = 0;
     System.out.println(solution.characterReplacement(s, k));
     System.out.println(solution.characterReplacement2(s, k));
+    System.out.println(solution.characterReplacement3(s, k));
   }
 
   public int characterReplacement(String s, int k) {
@@ -130,5 +133,25 @@ public class Solution {
       if (elem > max)
         max = elem;
     return max;
+  }
+
+  public int characterReplacement3(String s, int k) {
+    var letterStorage = new int[26];
+    var max = 0;
+    var left = 0;
+    var right = 0;
+    var result = 0;
+    var letterIdx = 0;
+    for (; right < s.length(); right++) {
+      letterIdx = s.charAt(right) - 'A';
+      letterStorage[letterIdx]++;
+      if (letterStorage[letterIdx] > max)
+        max = letterStorage[letterIdx];
+      if (right - left + 1 - max <= k)
+        result = Math.max(result, right - left + 1);
+      while (left < right && right - left + 1 - max > k)
+        letterStorage[s.charAt(left++) - 'A']--;
+    }
+    return result;
   }
 }
