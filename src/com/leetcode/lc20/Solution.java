@@ -41,23 +41,64 @@ Constraints:
  */
 public class Solution {
   public static void main(String[] args) {
-    String s = "()";
-    System.out.println(isValid(s));
+    var solution = new Solution();
+    String s;
+
+    s = "()";
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
 
     s = "()[]{}";
-    System.out.println(isValid(s));
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
 
     s = "(]";
-    System.out.println(isValid(s));
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
 
     s = "]}])";
-    System.out.println(isValid(s));
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
 
     s = "((()))([])[()]({()})";
-    System.out.println(isValid(s));
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
+
+    s = ")";
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
+
+    s = "(]{}";
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
+
+    s = "()}";
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
+    System.out.println();
+
+    s = "(})";
+    System.out.println(solution.isValid(s));
+    System.out.println(solution.isValid2(s));
+    System.out.println(solution.isValid3(s));
   }
 
-  public static boolean isValid(String s) {
+  public boolean isValid(String s) {
     LinkedList<Character> stack = new LinkedList<>();
     char[] charArray = s.toCharArray();
     for (char c : charArray) {
@@ -79,7 +120,7 @@ public class Solution {
     return stack.isEmpty();
   }
 
-  public boolean isValid1(String s) {
+  public boolean isValid2(String s) {
     char[] charArray = s.toCharArray();
     Stack<Character> stack = new Stack<>();
     for (char c : charArray) {
@@ -87,20 +128,30 @@ public class Solution {
         if (stack.empty() || stack.pop() != '(') {
           return false;
         }
-      }
-      else if (c == '}') {
+      } else if (c == '}') {
         if (stack.empty() || stack.pop() != '{') {
           return false;
         }
-      }
-      else if (c == ']') {
+      } else if (c == ']') {
         if (stack.empty() || stack.pop() != '[') {
           return false;
         }
-      }
-      else {
+      } else {
         stack.push(c);
       }
+    }
+    return stack.empty();
+  }
+
+  public boolean isValid3(String s) {
+    var stack = new Stack<Character>();
+    for (var ch : s.toCharArray()) {
+      if (stack.empty() && ")]}".indexOf(ch) >= 0)
+        return false;
+      else if (!stack.empty() && (stack.peek() == '(' && ch == ')' || stack.peek() == '[' && ch == ']' || stack.peek() == '{' && ch == '}'))
+        stack.pop();
+      else
+        stack.push(ch);
     }
     return stack.empty();
   }
