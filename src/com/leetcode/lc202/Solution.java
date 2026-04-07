@@ -42,10 +42,15 @@ public class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
+
     System.out.println(solution.isHappy(19));
     System.out.println(solution.isHappy2(19));
+    System.out.println(solution.isHappy3(19));
+    System.out.println();
+
     System.out.println(solution.isHappy(2));
     System.out.println(solution.isHappy2(2));
+    System.out.println(solution.isHappy3(2));
   }
 
   public boolean isHappy(int n) {
@@ -65,12 +70,31 @@ public class Solution {
   public boolean isHappy2(int n) {
     var set = new HashSet<Integer>();
     while (n != 1 && set.add(n))
-      n = getSumSquaresDigits(n);
+      n = getSquareDigitSum(n);
     return n == 1;
   }
 
-  private int getSumSquaresDigits(long n) {
+  public boolean isHappy3(int n) {
+    var slow = n;
+    var fast = n;
+    do {
+      slow = getSquareDigitSum(slow);
+      fast = getSquareDigitSum(getSquareDigitSum(fast));
+    } while (slow != 1 && fast != 1 && slow != fast);
+    return slow == 1 || fast == 1;
+  }
+
+  private int getSquareDigitSum(int n) {
     var sum = 0;
+    while (n > 0) {
+      sum += (n % 10) * (n % 10);
+      n /= 10;
+    }
+    return sum;
+  }
+
+  private long getSumSquaresDigits(long n) {
+    long sum = 0;
     while (n > 0) {
       sum += (n % 10) * (n % 10);
       n /= 10;
