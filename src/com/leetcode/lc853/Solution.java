@@ -64,12 +64,18 @@ Constraints:
  */
 public class Solution {
 
+  // pos      0 1 2 3 4 5 6 7 8 9 101112
+  // speed    1_____3___1_____4___2_____  target 12
+  // time     12    3   7     1   1
   public static void main(String[] args) {
+    var solution = new Solution();
+
     int target = 12;
     int[] position = new int[]{10, 8, 0, 5, 3};
     int[] speed = new int[]{2, 4, 1, 1, 3};
-    System.out.print(carFleet(target, position, speed));//3
-    System.out.println(" //3");
+    System.out.println(solution.carFleet(target, position, speed));//3
+    System.out.println(solution.carFleet2(target, position, speed));//3
+    System.out.println();
     // {10,2} {8,4} {0,1} {5,1} {3,3}
     // {10,1} {8,1} {0,12} {5,7} {3,3}
     // {10,1} {8,1} {5,7} {3,3} {0,12}
@@ -79,15 +85,17 @@ public class Solution {
     target = 10;
     position = new int[]{3};
     speed = new int[]{3};
-    System.out.print(carFleet(target, position, speed));//1
-    System.out.println(" //1");
+    System.out.println(solution.carFleet(target, position, speed));//1
+    System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println();
     //Input: target = 100, position = [0,2,4], speed = [4,2,1]
     //Output: 1
     target = 100;
     position = new int[]{0, 2, 4};
     speed = new int[]{4, 2, 1};
-    System.out.print(carFleet(target, position, speed));//1
-    System.out.println(" //1");
+    System.out.println(solution.carFleet(target, position, speed));//1
+    System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println();
 
     //target = 20
     //position = [6, 2, 17]
@@ -97,8 +105,9 @@ public class Solution {
     target = 20;
     position = new int[]{6, 2, 17};
     speed = new int[]{3, 9, 2};
-    System.out.print(carFleet(target, position, speed));//2
-    System.out.println(" //2");
+    System.out.println(solution.carFleet(target, position, speed));//2
+    System.out.println(solution.carFleet2(target, position, speed));//2
+    System.out.println();
 //    position = new int[]{2,6,17};
 //    speed = new int[]{9,3,2};
     // {2,5,2}
@@ -114,8 +123,9 @@ public class Solution {
     target = 10;
     position = new int[]{8, 3, 7, 4, 6, 5};
     speed = new int[]{4, 4, 4, 4, 4, 4};
-    System.out.print(carFleet(target, position, speed));//6
-    System.out.println(" //6");
+    System.out.println(solution.carFleet(target, position, speed));//6
+    System.out.println(solution.carFleet2(target, position, speed));//6
+    System.out.println();
     //{8,4},{3,4},{7,4},{4,4},{6,4},{5,4}
     //{8,1},{3,2},{7,1},{4,2},{6,1},{5,2}
     //{12,4},{7,4},{11,4},{8,4},{10,4},{9,4}
@@ -128,8 +138,9 @@ public class Solution {
     target = 10;
     position = new int[]{2, 4};
     speed = new int[]{3, 2};
-    System.out.print(carFleet(target, position, speed));//1
-    System.out.println(" //1");
+    System.out.println(solution.carFleet(target, position, speed));//1
+    System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println();
     //{2, 3} {4, 2}
     //{2, 3, 11} {4, 3, 10}
 
@@ -142,12 +153,11 @@ public class Solution {
     target = 31;
     position = new int[]{5, 26, 18, 25, 29, 21, 22, 12, 19, 6};
     speed = new int[]{7, 6, 6, 4, 3, 4, 9, 7, 6, 4};
-    System.out.print(carFleet(target, position, speed));//6
-    System.out.println(" //6");
-
+    System.out.println(solution.carFleet(target, position, speed));//6
+    System.out.println(solution.carFleet2(target, position, speed));//6
   }
 
-  public static int carFleet(int target, int[] position, int[] speed) {
+  public int carFleet(int target, int[] position, int[] speed) {
     var idxs = new Integer[position.length];
     for (int i = 0; i < position.length; i++) {
       idxs[i] = i;
@@ -163,5 +173,24 @@ public class Solution {
       }
     }
     return count;
+  }
+
+  public int carFleet2(int target, int[] position, int[] speed) {
+    var maxPosition = 0;
+    for (var pos : position)
+      if (pos > maxPosition)
+        maxPosition = pos;
+    var time = new double[maxPosition + 1];
+    for (var i = 0; i < position.length; i++)
+      time[position[i]] = (target - position[i]) * 1.0 / speed[i];
+    var currentTime = 0.0;
+    var fleetCount = 0;
+    for (var i = maxPosition; i >= 0; i--) {
+      if (time[i] > currentTime) {
+        currentTime = time[i];
+        fleetCount++;
+      }
+    }
+    return fleetCount;
   }
 }
