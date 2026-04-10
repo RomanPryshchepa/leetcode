@@ -1,6 +1,5 @@
 package com.leetcode.lc150;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 /*
@@ -56,28 +55,22 @@ Constraints:
 public class Solution {
 
   public static void main(String[] args) {
-    System.out.println(evalRPN(new String[]{"2", "1", "+", "3", "*"}));
-    System.out.println(evalRPN(new String[]{"4", "13", "5", "/", "+"}));
-    System.out.println(
-        evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
+    var solution = new Solution();
+    System.out.println(solution.evalRPN(new String[]{"2", "1", "+", "3", "*"}));
+    System.out.println(solution.evalRPN(new String[]{"4", "13", "5", "/", "+"}));
+    System.out.println(solution.evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
   }
 
-  public static int evalRPN(String[] tokens) {
-    Deque<Integer> stack = new LinkedList<>();
-    for (String token : tokens) {
-      if ("+".equals(token)) {
-        stack.push(stack.pop() + stack.pop());
-      } else if ("-".equals(token)) {
-        int number2 = stack.pop();
-        stack.push(stack.pop() - number2);
-      } else if ("*".equals(token)) {
-        stack.push(stack.pop() * stack.pop());
-      } else if ("/".equals(token)) {
-        int number2 = stack.pop();
-        stack.push(stack.pop() / number2);
-      } else {
-        stack.push(Integer.parseInt(token));
-      }
+  public int evalRPN(String[] tokens) {
+    var stack = new LinkedList<Integer>();
+    for (var token : tokens) {
+        switch (token) {
+            case "+" -> stack.push(stack.pop() + stack.pop());
+            case "-" -> stack.push(-stack.pop() + stack.pop());
+            case "*" -> stack.push(stack.pop() * stack.pop());
+            case "/" -> stack.push((int) (1.0 / stack.pop() * stack.pop()));
+            default -> stack.push(Integer.parseInt(token));
+        }
     }
     return stack.pop();
   }
