@@ -56,8 +56,26 @@ public class Solution {
     myStack.push(2);
     System.out.println(myStack.top()); // return 2
     System.out.println(myStack.pop()); // return 2
-    System.out.println(myStack.pop()); // return 2
-    System.out.println(myStack.empty()); // return False
+    System.out.println(myStack.pop()); // return 1
+    System.out.println(myStack.empty()); // return false
+    System.out.println();
+
+    MyStack1 myStack1 = new MyStack1();
+    myStack1.push(1);
+    myStack1.push(2);
+    System.out.println(myStack1.top()); // return 2
+    System.out.println(myStack1.pop()); // return 2
+    System.out.println(myStack1.pop()); // return 1
+    System.out.println(myStack1.empty()); // return false
+    System.out.println();
+
+    MyStack2 myStack2 = new MyStack2();
+    myStack2.push(1);
+    myStack2.push(2);
+    System.out.println(myStack2.top()); // return 2
+    System.out.println(myStack2.pop()); // return 2
+    System.out.println(myStack2.pop()); // return 1
+    System.out.println(myStack2.empty()); // return false
   }
 
 }
