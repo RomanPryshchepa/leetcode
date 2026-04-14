@@ -87,11 +87,25 @@ public class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
+
     System.out.println(solution.simplifyPath("/home/")); // /home
+    System.out.println(solution.simplifyPath2("/home/")); // /home
+    System.out.println();
+
     System.out.println(solution.simplifyPath("/home//foo/")); // /home/foo
+    System.out.println(solution.simplifyPath2("/home//foo/")); // /home/foo
+    System.out.println();
+
     System.out.println(solution.simplifyPath("/home/user/Documents/../Pictures")); // /home/user/Pictures
+    System.out.println(solution.simplifyPath2("/home/user/Documents/../Pictures")); // /home/user/Pictures
+    System.out.println();
+
     System.out.println(solution.simplifyPath("/../")); // /
+    System.out.println(solution.simplifyPath2("/../")); // /
+    System.out.println();
+
     System.out.println(solution.simplifyPath("/.../a/../b/c/../d/./")); // /.../b/d
+    System.out.println(solution.simplifyPath2("/.../a/../b/c/../d/./")); // /.../b/d
   }
 
   public String simplifyPath(String path) {
@@ -118,5 +132,22 @@ public class Solution {
       sb.insert(0, delim);
     }
     return sb.toString();
+  }
+
+  public String simplifyPath2(String path) {
+    var parts = path.split("/");
+    var stack = new Stack<String>();
+    for (String s : parts) {
+      if (!s.isEmpty() && !s.equals(".") && !s.equals(".."))
+        stack.push(s);
+      else if (!stack.isEmpty() && s.equals(".."))
+        stack.pop();
+    }
+    if (stack.isEmpty())
+      return "/";
+    var result = new StringBuilder();
+    for (String s : stack)
+      result.append("/").append(s);
+    return result.toString();
   }
 }
