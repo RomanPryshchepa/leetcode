@@ -57,6 +57,17 @@ public class Solution {
     minStack.pop();
     System.out.println(minStack.top());    // return 0
     System.out.println(minStack.getMin()); // return -2
+
+    System.out.println();
+
+    var minStack2 = new MinStack2();
+    minStack2.push(-2);
+    minStack2.push(0);
+    minStack2.push(-3);
+    System.out.println(minStack2.getMin()); // return -3
+    minStack2.pop();
+    System.out.println(minStack2.top());    // return 0
+    System.out.println(minStack2.getMin()); // return -2
   }
 
 
