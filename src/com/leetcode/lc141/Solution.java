@@ -45,9 +45,21 @@ Constraints:
 
 Follow up: Can you solve it using O(1) (i.e. constant) memory?
  */
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
 public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
+
         var node1 = new ListNode(2);
         var node2 = new ListNode(0);
         var node3 = new ListNode(-4);
@@ -56,6 +68,19 @@ public class Solution {
         node2.next = node3;
         node3.next = node1;
         System.out.println(solution.hasCycle(head));
+        System.out.println(solution.hasCycle2(head));
+        System.out.println();
+
+        node2 = new ListNode(2);
+        head = new ListNode(1, node2);
+        node2.next = head;
+        System.out.println(solution.hasCycle(head));
+        System.out.println(solution.hasCycle2(head));
+        System.out.println();
+
+        head = new ListNode(1);
+        System.out.println(solution.hasCycle(head));
+        System.out.println(solution.hasCycle2(head));
     }
 
     public boolean hasCycle(ListNode head) {
@@ -68,5 +93,17 @@ public class Solution {
             current = current.next;
         }
         return false;
+    }
+
+    public boolean hasCycle2(ListNode head) {
+        if (head == null)
+            return false;
+        var slow = head;
+        var fast = head.next;
+        while (slow != null && fast != null && fast.next != null && slow != fast) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow == fast;
     }
 }
