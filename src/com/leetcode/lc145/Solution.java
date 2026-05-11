@@ -35,7 +35,9 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 
 import com.leetcode.tools.TreeNode;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Definition for a binary tree node.
@@ -55,7 +57,23 @@ import java.util.List;
 public class Solution {
 
   public static void main(String[] args) {
+    var solution = new Solution();
 
+    var root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null));
+    System.out.println(solution.postorderTraversal(root));
+    System.out.println(solution.postorderTraversal2(root));
+
+    root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5, new TreeNode(6), new TreeNode(7))), new TreeNode(3, null, new TreeNode(8, new TreeNode(9), null)));
+    System.out.println(solution.postorderTraversal(root));
+    System.out.println(solution.postorderTraversal2(root));
+
+    root = new TreeNode();
+    System.out.println(solution.postorderTraversal(root));
+    System.out.println(solution.postorderTraversal2(root));
+
+    root = new TreeNode(1);
+    System.out.println(solution.postorderTraversal(root));
+    System.out.println(solution.postorderTraversal2(root));
   }
 
   public List<Integer> postorderTraversal(TreeNode root) {
@@ -70,6 +88,26 @@ public class Solution {
       result.addAll(postorderTraversal(root.right));
     }
     result.add(root.val);
+    return result;
+  }
+
+  public List<Integer> postorderTraversal2(TreeNode root) {
+    var nodes = new LinkedList<TreeNode>();
+    var result = new LinkedList<Integer>();
+    if (root == null)
+      return result;
+    var stack = new Stack<TreeNode>();
+    stack.push(root);
+    while (!stack.empty()) {
+      if (stack.peek().left != null && !nodes.contains(stack.peek().left))
+        stack.push(stack.peek().left);
+      else if (stack.peek().right != null && !nodes.contains(stack.peek().right))
+        stack.push(stack.peek().right);
+      else
+        nodes.add(stack.pop());
+    }
+    for (var node : nodes)
+      result.add(node.val);
     return result;
   }
 }
