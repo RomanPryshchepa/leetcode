@@ -54,6 +54,14 @@ public class Solution {
     System.out.println(kthLargest.add(10));
     System.out.println(kthLargest.add(9));
     System.out.println(kthLargest.add(4));
+    System.out.println();
+
+    KthLargest2 kthLargest2 = new KthLargest2(k, ints);
+    System.out.println(kthLargest2.add(3));
+    System.out.println(kthLargest2.add(5));
+    System.out.println(kthLargest2.add(10));
+    System.out.println(kthLargest2.add(9));
+    System.out.println(kthLargest2.add(4));
   }
 
 }
