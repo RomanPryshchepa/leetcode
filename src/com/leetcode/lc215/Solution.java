@@ -1,6 +1,7 @@
 package com.leetcode.lc215;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 /*
 215. Kth Largest Element in an Array
@@ -40,17 +41,33 @@ public class Solution {
     nums = new int[]{3, 2, 1, 5, 6, 4};
     k = 2;
     System.out.println(solution.findKthLargest(nums, k)); // 5
+    System.out.println(solution.findKthLargest2(nums, k)); // 5
+    System.out.println(solution.findKthLargest3(nums, k)); // 5
 
     nums = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6};
     k = 4;
     System.out.println(solution.findKthLargest(nums, k)); // 4
+    System.out.println(solution.findKthLargest2(nums, k)); // 4
+    System.out.println(solution.findKthLargest3(nums, k)); // 4
 
     nums = new int[]{2, 1};
     k = 2;
     System.out.println(solution.findKthLargest(nums, k)); // 1
+    System.out.println(solution.findKthLargest2(nums, k)); // 1
+    System.out.println(solution.findKthLargest3(nums, k)); // 1
   }
 
-  public int findKthLargestV1(int[] nums, int k) {
+  public int findKthLargest3(int[] nums, int k) {
+    var q = new PriorityQueue<Integer>(nums.length, (a, b) -> b - a);
+    for (var num : nums)
+      q.add(num);
+    var res = 0;
+    for (var i = 0; i < k; i++)
+      res = q.poll();
+    return res;
+  }
+
+  public int findKthLargest2(int[] nums, int k) {
     Arrays.sort(nums);
     return nums[nums.length - k];
   }
