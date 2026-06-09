@@ -48,18 +48,19 @@ public class Solution {
     words = new String[]{"hello", "leetcode"};
     order = "hlabcdefgijkmnopqrstuvwxyz";
     System.out.println(solution.isAlienSorted(words, order)); // true
+    System.out.println(solution.isAlienSorted2(words, order)); // true
+    System.out.println();
 
     words = new String[]{"word", "world", "row"};
     order = "worldabcefghijkmnpqstuvxyz";
     System.out.println(solution.isAlienSorted(words, order)); // false
+    System.out.println(solution.isAlienSorted2(words, order)); // false
+    System.out.println();
 
     words = new String[]{"apple", "app"};
     order = "abcdefghijklmnopqrstuvwxyz";
-    getPrintln(solution, words, order); // false
-  }
-
-  private static void getPrintln(Solution solution, String[] words, String order) {
-    System.out.println(solution.isAlienSorted(words, order));
+    System.out.println(solution.isAlienSorted(words, order)); // false
+    System.out.println(solution.isAlienSorted2(words, order)); // false
   }
 
   public boolean isAlienSorted(String[] words, String order) {
@@ -91,5 +92,28 @@ public class Solution {
       }
     }
     return true;
+  }
+
+  public boolean isAlienSorted2(String[] words, String order) {
+    if (words.length == 1)
+      return true;
+    var letterPos = new int[26];
+    for (var i = 0; i < order.length(); i++)
+      letterPos[order.charAt(i) - 'a'] = i;
+    for (var j = 1; j < words.length; j++)
+      if (!isOrderCorrect(words[j - 1], words[j], letterPos))
+        return false;
+    return true;
+  }
+
+  private boolean isOrderCorrect(String word1, String word2, int[] letterPos) {
+    var minLen = Math.min(word1.length(), word2.length());
+    for (var i = 0; i < minLen; i++) {
+      if (letterPos[word1.charAt(i) - 'a'] < letterPos[word2.charAt(i) - 'a'])
+        return true;
+      if (letterPos[word1.charAt(i) - 'a'] > letterPos[word2.charAt(i) - 'a'])
+        return false;
+    }
+    return word1.length() <= word2.length();
   }
 }
