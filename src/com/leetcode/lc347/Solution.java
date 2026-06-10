@@ -1,5 +1,7 @@
 package com.leetcode.lc347;
 
+import com.leetcode.tools.Pair;
+
 import java.util.*;
 
 /*
@@ -44,8 +46,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1,1,1,2,2,3}, 2)));
+        System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1,1,1,2,2,3}, 2)));
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1}, 1)));
+        System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1}, 1)));
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1,2,1,2,1,2,3,1,3,2}, 2)));
+        System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1,2,1,2,1,2,3,1,3,2}, 2)));
     }
 
     public int[] topKFrequent(int[] nums, int k) {
@@ -68,6 +73,24 @@ public class Solution {
                 }
             }
         }
+        return res;
+    }
+
+    public int[] topKFrequent2(int[] nums, int k) {
+        var map = new HashMap<Integer, Integer>();
+        for (var num : nums) {
+            if (map.containsKey(num))
+                map.put(num, map.get(num) + 1);
+            else
+                map.put(num, 1);
+        }
+        var queue = new PriorityQueue<Pair<Integer, Integer>>(map.size(), (a, b) -> b.secondItem() - a.secondItem());
+        for (var key : map.keySet())
+            queue.add(new Pair<>(key, map.get(key)));
+        var res = new int[k];
+        var i = 0;
+        while (k-- > 0)
+            res[i++] = queue.poll().firstItem();
         return res;
     }
 }
