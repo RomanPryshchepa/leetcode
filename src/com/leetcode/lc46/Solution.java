@@ -45,7 +45,9 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.permute(new int[]{1, 2, 3}));
+    System.out.println(solution.permute2(new int[]{1, 2, 3}));
     System.out.println(solution.permute(new int[]{1, 2, 3, 4}));
+    System.out.println(solution.permute2(new int[]{1, 2, 3, 4}));
   }
 
   public List<List<Integer>> permute(int[] nums) {
@@ -63,4 +65,27 @@ public class Solution {
     return new ArrayList<>(result);
   }
 
+  public List<List<Integer>> permute2(int[] nums) {
+    var result = new ArrayList<List<Integer>>();
+    result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+    for (int step = 0; step < nums.length - 1; step++) {
+      var size = result.size();
+      for (var k = 0; k < size; k++) {
+        var target = result.removeFirst();
+        for (int j = step; j < nums.length; j++)
+          result.add(swap(target, step, j));
+      }
+    }
+    return result;
+  }
+
+  private List<Integer> swap(List<Integer> nums, int i, int j) {
+    var result = new ArrayList<>(nums);
+    if (i == j)
+      return nums;
+    int temp = result.get(i);
+    result.set(i, nums.get(j));
+    result.set(j, temp);
+    return result;
+  }
 }
