@@ -1,6 +1,7 @@
 package com.leetcode.lc78;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -37,7 +38,9 @@ public class Solution {
   public static void main(String[] args) {
     Solution solution = new Solution();
     System.out.println(solution.subsets(new int[]{1, 2, 3}));
+    System.out.println(solution.subsets2(new int[]{1, 2, 3}));
     System.out.println(solution.subsets(new int[]{0}));
+    System.out.println(solution.subsets2(new int[]{0}));
   }
 
   public List<List<Integer>> subsets(int[] nums) {
@@ -53,5 +56,26 @@ public class Solution {
       result.add(list);
     }
     return result;
+  }
+
+  public List<List<Integer>> subsets2(int[] nums) {
+    var res = new LinkedList<List<Integer>>();
+    for (int i = 0; i < Math.pow(2, nums.length); i++) {
+      res.add(getList(i, nums));
+    }
+    return res;
+  }
+
+  private List<Integer> getList(int num, int[] nums) {
+    var index = 0;
+    var list = new LinkedList<Integer>();
+    while (num > 0) {
+      if (num % 2 == 1) {
+        list.add(nums[index]);
+      }
+      index++;
+      num /= 2;
+    }
+    return list;
   }
 }
