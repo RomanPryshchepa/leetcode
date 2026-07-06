@@ -1,8 +1,8 @@
 package com.leetcode.lc1046;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /*
 1046. Last Stone Weight
@@ -50,12 +50,30 @@ public class Solution {
 
     stones = new int[]{2, 7, 4, 1, 8, 1};
     System.out.println(solution.lastStoneWeight(stones)); // 1
+    System.out.println(solution.lastStoneWeight2(stones)); // 1
 
     stones = new int[]{1};
     System.out.println(solution.lastStoneWeight(stones)); // 1
+    System.out.println(solution.lastStoneWeight2(stones)); // 1
 
     stones = new int[]{1, 1, 1, 1};
     System.out.println(solution.lastStoneWeight(stones)); // 0
+    System.out.println(solution.lastStoneWeight2(stones)); // 0
+  }
+
+  public int lastStoneWeight2(int[] stones) {
+    var queue = new PriorityQueue<Integer>(stones.length, (a, b) -> b - a);
+    for (var stone : stones)
+      queue.add(stone);
+    var stone1 = 0;
+    var stone2 = 0;
+    while (queue.size() > 1) {
+      stone1 = queue.poll();
+      stone2 = queue.poll();
+      if (stone1 > stone2)
+        queue.add(stone1 - stone2);
+    }
+    return !queue.isEmpty() ? queue.peek() : 0;
   }
 
   public int lastStoneWeight(int[] stones) {
@@ -66,22 +84,22 @@ public class Solution {
     list.sort((o1, o2) -> o2 - o1);
     while (list.size() > 1) {
       if (list.get(0).equals(list.get(1))) {
-        list.remove(0);
-        list.remove(0);
+        list.removeFirst();
+        list.removeFirst();
       } else {
         int element = list.get(0) - list.get(1);
-        list.remove(0);
-        list.remove(0);
+        list.removeFirst();
+        list.removeFirst();
         list.add(searchInsert(list, element), element);
       }
     }
     if (list.size() == 1) {
-      return list.get(0);
+      return list.getFirst();
     }
     return 0;
   }
 
-  public static int searchInsert(List<Integer> list, int target) {
+  private static int searchInsert(List<Integer> list, int target) {
     int start = 0;
     int end = list.size() - 1;
     while (start <= end) {
