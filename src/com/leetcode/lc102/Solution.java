@@ -54,12 +54,15 @@ class Solution {
         var solution = new Solution();
         var root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
         System.out.println(solution.levelOrder(root));
+        System.out.println(solution.levelOrder2(root));
 
         root =  new TreeNode(1);
         System.out.println(solution.levelOrder(root));
+        System.out.println(solution.levelOrder2(root));
 
         root = null;
         System.out.println(solution.levelOrder(root));
+        System.out.println(solution.levelOrder2(root));
     }
 
     public List<List<Integer>> levelOrder(TreeNode root) {
@@ -83,6 +86,29 @@ class Solution {
             parents.clear();
             parents.addAll(children);
             children.clear();
+        }
+        return result;
+    }
+
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        var queue = new LinkedList<TreeNode>();
+        var result = new LinkedList<List<Integer>>();
+        if (root == null)
+            return result;
+        queue.add(root);
+        var qLen = queue.size();
+        while (!queue.isEmpty()) {
+            var list = new LinkedList<Integer>();
+            for (var i = 0; i < qLen; i++) {
+                var node = queue.poll();
+                list.add(node.val);
+                if (node.left != null)
+                    queue.add(node.left);
+                if (node.right != null)
+                    queue.add(node.right);
+            }
+            result.add(list);
+            qLen = queue.size();
         }
         return result;
     }
