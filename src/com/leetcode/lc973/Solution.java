@@ -1,8 +1,6 @@
 package com.leetcode.lc973;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.*;
 
 /*
 973. K Closest Points to Origin
@@ -48,10 +46,12 @@ public class Solution {
     points = new int[][]{{1, 3}, {-2, 2}};
     k = 1;
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
 
     points = new int[][]{{3, 3}, {5, -1}, {-2, 4}};
     k = 2;
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
   }
 
   public int[][] kClosest(int[][] points, int k) {
@@ -80,5 +80,35 @@ public class Solution {
       map.remove(map.firstEntry().getKey());
     }
     return list.toArray(new int[list.size()][]);
+  }
+
+  public int[][] kClosest2(int[][] points, int k) {
+    var queue = new PriorityQueue<Point>(points.length, Comparator.comparingDouble(a -> a.d));
+    for (var point : points)
+      queue.add(new Point(point, distance(point)));
+    var result = new int[k][2];
+    var i = 0;
+    while (k-- > 0)
+      result[i++] = queue.poll().getXY();
+    return result;
+  }
+
+  private double distance(int[] point) {
+    return Math.sqrt(point[0] * point[0] + point[1] * point[1]);
+  }
+
+  static class Point {
+    int x;
+    int y;
+    double d;
+    public Point(int[] point, double d) {
+      this.x = point[0];
+      this.y = point[1];
+      this.d = d;
+    }
+
+    public int[] getXY() {
+      return new int[] {x, y};
+    }
   }
 }
