@@ -32,7 +32,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.findMaxAverage(new int[]{1,12,-5,-6,50,3}, 4));
+        System.out.println(solution.findMaxAverage2(new int[]{1,12,-5,-6,50,3}, 4));
         System.out.println(solution.findMaxAverage(new int[]{5}, 1));
+        System.out.println(solution.findMaxAverage2(new int[]{5}, 1));
     }
 
     public double findMaxAverage(int[] nums, int k) {
@@ -42,5 +44,18 @@ public class Solution {
         for (var i = 0; i < nums.length - k; i++)
             result = Math.max(result, 1.0 * (nums[i + k] - nums[i]) / k);
         return result;
+    }
+
+    public double findMaxAverage2(int[] nums, int k) {
+        var sum = 0;
+        for (var i = 0; i < k; i++)
+            sum += nums[i];
+        var maxAvg = 1.0 * sum / k;
+        for (var i = k; i < nums.length; i++) {
+            sum -= nums[i - k];
+            sum += nums[i];
+            maxAvg = Math.max(maxAvg, 1.0 * sum / k);
+        }
+        return maxAvg;
     }
 }
