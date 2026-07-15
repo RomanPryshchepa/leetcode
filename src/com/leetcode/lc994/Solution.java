@@ -50,6 +50,14 @@ public class Solution {
         System.out.println(solution.orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
         System.out.println(solution.orangesRotting(new int[][]{{2,1,1},{0,1,1},{1,0,1}}));
         System.out.println(solution.orangesRotting(new int[][]{{0,2}}));
+        System.out.println();
+
+        solution = new Solution();
+        System.out.println(solution.orangesRotting2(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
+        solution = new Solution();
+        System.out.println(solution.orangesRotting2(new int[][]{{2,1,1},{0,1,1},{1,0,1}}));
+        solution = new Solution();
+        System.out.println(solution.orangesRotting2(new int[][]{{0,2}}));
     }
 
     public int orangesRotting(int[][] grid) {
@@ -99,5 +107,54 @@ public class Solution {
             if (freshCnt == 0) break;
         }
         return freshCnt == 0 ? time : -1;
+    }
+
+    private int freshCnt;
+    private final Deque<int[]> rottenQueue = new LinkedList<>();
+
+    public int orangesRotting2(int[][] grid) {
+        var res = 0;
+        for (var i = 0; i < grid.length; i++) {
+            for (var j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 1)
+                    freshCnt++;
+                else if (grid[i][j] == 2) {
+                    rottenQueue.add(new int[] {i, j});
+                }
+            }
+        }
+        if (freshCnt == 0)
+            return 0;
+        if (rottenQueue.isEmpty())
+            return -1;
+        var qLen = rottenQueue.size();
+        while (qLen > 0 && freshCnt > 0) {
+            res++;
+            for (var i = 0; i < qLen; i++) {
+                var rotten = rottenQueue.poll();
+                var rI = rotten[0];
+                var rJ = rotten[1];
+                if (rI > 0)
+                    freshToRotten(grid, rI - 1, rJ);
+                if (rI < grid.length - 1)
+                    freshToRotten(grid, rI + 1, rJ);
+                if (rJ > 0)
+                    freshToRotten(grid, rI, rJ - 1);
+                if (rJ < grid[0].length - 1)
+                    freshToRotten(grid, rI, rJ + 1);
+                if (freshCnt == 0)
+                    return res;
+            }
+            qLen = rottenQueue.size();
+        }
+        return -1;
+    }
+
+    private void freshToRotten(int[][] grid, int i, int j) {
+        if (grid[i][j] == 1) {
+            grid[i][j] = 2;
+            rottenQueue.add(new int[] {i, j});
+            freshCnt--;
+        }
     }
 }
