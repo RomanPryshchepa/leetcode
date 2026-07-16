@@ -47,11 +47,13 @@ public class Solution {
     k = 1;
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest3(points, k)));
 
     points = new int[][]{{3, 3}, {5, -1}, {-2, 4}};
     k = 2;
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest3(points, k)));
   }
 
   public int[][] kClosest(int[][] points, int k) {
@@ -110,5 +112,21 @@ public class Solution {
     public int[] getXY() {
       return new int[] {x, y};
     }
+  }
+
+  public int[][] kClosest3(int[][] points, int k) {
+    var pointsDist = new int[points.length][3];
+    for (int i = 0; i < points.length; i++) {
+      pointsDist[i][0] = points[i][0];
+      pointsDist[i][1] = points[i][1];
+      pointsDist[i][2] = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+    }
+    Arrays.sort(pointsDist, Comparator.comparingInt(o -> o[2]));
+    var res = new int[k][2];
+    for (int i = 0; i < k; i++) {
+      res[i][0] = pointsDist[i][0];
+      res[i][1] = pointsDist[i][1];
+    }
+    return res;
   }
 }
