@@ -1,5 +1,7 @@
 package com.leetcode.lc383;
 
+import java.util.Arrays;
+
 /*
 383. Ransom Note
 
@@ -35,8 +37,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.canConstruct("a", "b"));
+        System.out.println(solution.canConstruct2("a", "b"));
         System.out.println(solution.canConstruct("aa", "ab"));
+        System.out.println(solution.canConstruct2("aa", "ab"));
         System.out.println(solution.canConstruct("aa", "aab"));
+        System.out.println(solution.canConstruct2("aa", "aab"));
     }
 
     public boolean canConstruct(String ransomNote, String magazine) {
@@ -47,6 +52,22 @@ public class Solution {
             letters[ch - 'a']--;
             if (letters[ch - 'a'] < 0)
                 return false;
+        }
+        return true;
+    }
+
+    public boolean canConstruct2(String ransomNote, String magazine) {
+        var mArr = magazine.toCharArray();
+        var rnArr = ransomNote.toCharArray();
+        Arrays.sort(mArr);
+        Arrays.sort(rnArr);
+        var j = 0;
+        for (char c : rnArr) {
+            while (j < mArr.length && c != mArr[j])
+                j++;
+            if (j == mArr.length)
+                return false;
+            j++;
         }
         return true;
     }
