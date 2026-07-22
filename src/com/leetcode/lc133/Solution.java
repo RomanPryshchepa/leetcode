@@ -3,6 +3,7 @@ package com.leetcode.lc133;
 import com.leetcode.tools.Node;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /*
@@ -88,6 +89,7 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.cloneGraph(null));
+        System.out.println(solution.cloneGraph2(null));
     }
 
     public Node cloneGraph(Node node) {
@@ -105,5 +107,28 @@ public class Solution {
             clone.children.add(dfs(neighbor));
         }
         return clone;
+    }
+
+    public Node cloneGraph2(Node node) {
+        if (node == null)
+            return null;
+        var map = new HashMap<Node, Node>();
+        var queue = new LinkedList<Node>();
+        queue.add(node);
+        var qLen = queue.size();
+        while (qLen > 0) {
+            for (var i = 0; i < qLen; i++) {
+                var currNode = queue.pop();
+                map.put(currNode, new Node(currNode.val));
+                for (var neighbor : currNode.children)
+                    if (!map.containsKey(neighbor))
+                        queue.add(neighbor);
+            }
+            qLen = queue.size();
+        }
+        for (var entry : map.entrySet())
+            for (var neighbor : entry.getKey().children)
+                entry.getValue().children.add(map.get(neighbor));
+        return map.get(node);
     }
 }
