@@ -84,4 +84,32 @@ class Solution {
     private boolean isSameTree(TreeNode p, TreeNode q) {
         return p == null && q == null || (p != null && q != null && p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
     }
+
+    private boolean isSameTree2(TreeNode p, TreeNode q) {
+        if (p == null && q == null)
+            return true;
+        if (p == null || q == null)
+            return false;
+        var queueP = new LinkedList<TreeNode>();
+        var queueQ = new LinkedList<TreeNode>();
+        queueP.add(p);
+        queueQ.add(q);
+        TreeNode pNode;
+        TreeNode qNode;
+        while (!queueP.isEmpty() && !queueQ.isEmpty()) {
+            pNode = queueP.poll();
+            qNode = queueQ.poll();
+            if (pNode != null && qNode == null || pNode == null && qNode != null)
+                return false;
+            if (pNode != null && qNode != null) {
+                if (pNode.val != qNode.val)
+                    return false;
+                queueP.add(pNode.left);
+                queueP.add(pNode.right);
+                queueQ.add(qNode.left);
+                queueQ.add(qNode.right);
+            }
+        }
+        return queueP.isEmpty() && queueQ.isEmpty();
+    }
 }
