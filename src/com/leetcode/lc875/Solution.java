@@ -51,6 +51,7 @@ public class Solution {
     piles = new int[]{3, 6, 7, 11};
     h = 8;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
     //Example 2:
     //
     //Input: piles = [30,11,23,4,20], h = 5
@@ -58,6 +59,7 @@ public class Solution {
     piles = new int[]{30, 11, 23, 4, 20};
     h = 5;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
 
     //Example 3:
     //
@@ -66,6 +68,7 @@ public class Solution {
     piles = new int[]{30, 11, 23, 4, 20};
     h = 6;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
 
     //Example 4:
     //
@@ -74,6 +77,7 @@ public class Solution {
     piles = new int[]{20};
     h = 6;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
 
     //Example 5:
     //
@@ -82,6 +86,7 @@ public class Solution {
     piles = new int[]{11, 20};
     h = 6;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
 
     //Example 6:
     //
@@ -90,6 +95,7 @@ public class Solution {
     piles = new int[]{5, 7};
     h = 3;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
 
     //Input: piles = [332484035,524908576,855865114,632922376,222257295,690155293,112677673,679580077,337406589,290818316,877337160,901728858,679284947,688210097,692137887,718203285,629455728,941802184]
     //h = 823855818
@@ -100,6 +106,7 @@ public class Solution {
         718203285, 629455728, 941802184};
     h = 823855818;
     System.out.println(solution.minEatingSpeed(piles, h));
+    System.out.println(solution.minEatingSpeed2(piles, h));
   }
 
   public int minEatingSpeed(int[] piles, int h) {
@@ -119,10 +126,27 @@ public class Solution {
     return 0;
   }
 
+  public int minEatingSpeed2(int[] piles, int h) {
+    var minSpeed = 1;
+    var maxSpeed = 1;
+    for (var pile : piles)
+      if (pile > maxSpeed)
+        maxSpeed = pile;
+    var midSpeed = minSpeed + (maxSpeed - minSpeed) / 2;
+    while (minSpeed < maxSpeed) {
+      if (getHours(piles, midSpeed) > h)
+        minSpeed = midSpeed + 1;
+      else
+        maxSpeed = midSpeed;
+      midSpeed = minSpeed + (maxSpeed - minSpeed) / 2;
+    }
+    return minSpeed;
+  }
+
   private int getHours(int[] piles, int speed) {
     int sum = 0;
     for (int pile : piles) {
-      sum += Math.ceil(pile * 1.0 / speed);
+      sum += (int) Math.ceil(pile * 1.0 / speed);
     }
     return sum;
   }
