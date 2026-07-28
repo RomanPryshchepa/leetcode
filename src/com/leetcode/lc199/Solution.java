@@ -45,6 +45,7 @@ Constraints:
 
 import com.leetcode.tools.TreeNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,14 +69,18 @@ class Solution {
         var solution = new Solution();
         var root = new TreeNode(1, new TreeNode(2, null, new TreeNode(5)),  new TreeNode(3,  null, new TreeNode(4)));
         System.out.println(solution.rightSideView(root));
+        System.out.println(solution.rightSideView2(root));
 
         root = new TreeNode(1, new TreeNode(2, new TreeNode(4, new TreeNode(5), null), null), new TreeNode(3));
         System.out.println(solution.rightSideView(root));
+        System.out.println(solution.rightSideView2(root));
 
         root = new TreeNode(1, null, new TreeNode(3));
         System.out.println(solution.rightSideView(root));
+        System.out.println(solution.rightSideView2(root));
 
         System.out.println(solution.rightSideView(null));
+        System.out.println(solution.rightSideView2(null));
     }
 
     public List<Integer> rightSideView(TreeNode root) {
@@ -96,6 +101,29 @@ class Solution {
             parents.clear();
             parents.addAll(children);
             children.clear();
+        }
+        return result;
+    }
+
+    public List<Integer> rightSideView2(TreeNode root) {
+        var result = new ArrayList<Integer>();
+        if (root == null)
+            return result;
+        var queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        var qLen = queue.size();
+        TreeNode node;
+        while (qLen > 0) {
+            for (var i = 0; i < qLen; i++) {
+                node = queue.pop();
+                if (node.left != null)
+                    queue.add(node.left);
+                if (node.right != null)
+                    queue.add(node.right);
+                if (i == qLen - 1)
+                    result.add(node.val);
+            }
+            qLen = queue.size();
         }
         return result;
     }
