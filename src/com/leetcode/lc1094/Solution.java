@@ -1,5 +1,7 @@
 package com.leetcode.lc1094;
 
+import java.util.TreeMap;
+
 /*
 1094. Car Pooling
 
@@ -35,7 +37,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.carPooling(new int[][]{{2,1,5}, {3,3,7}}, 4));
+        System.out.println(solution.carPooling2(new int[][]{{2,1,5}, {3,3,7}}, 4));
         System.out.println(solution.carPooling(new int[][]{{2,1,5}, {3,3,7}}, 5));
+        System.out.println(solution.carPooling2(new int[][]{{2,1,5}, {3,3,7}}, 5));
     }
 
     public boolean carPooling(int[][] trips, int capacity) {
@@ -48,6 +52,21 @@ public class Solution {
         for (var km : kms) {
             cap += km;
             if (cap > capacity)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean carPooling2(int[][] trips, int capacity) {
+        var stops = new TreeMap<Integer, Integer>();
+        for (var trip : trips) {
+            stops.put(trip[1], stops.getOrDefault(trip[1], 0) + trip[0]);
+            stops.put(trip[2], stops.getOrDefault(trip[2], 0) - trip[0]);
+        }
+        var pass = 0;
+        for (var stop : stops.keySet()) {
+            pass += stops.get(stop);
+            if (pass > capacity)
                 return false;
         }
         return true;
