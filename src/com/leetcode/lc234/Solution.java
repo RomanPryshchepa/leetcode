@@ -45,13 +45,32 @@ class Solution {
 
   public static void main(String[] args) {
     Solution solution = new Solution();
+
+
     var head = createList(1, 2, 2, 1);
     printList(head);
     System.out.println(solution.isPalindrome(head)); // true
+    System.out.println(solution.isPalindrome2(head)); // true
 
     head = createList(1, 2);
     printList(head);
     System.out.println(solution.isPalindrome(head)); // false
+    System.out.println(solution.isPalindrome2(head)); // false
+
+    head = createList(1, 2, 1);
+    printList(head);
+    System.out.println(solution.isPalindrome(head)); // true
+    System.out.println(solution.isPalindrome2(head)); // true
+
+    head = createList(1, 2, 3, 4, 5);
+    printList(head);
+    System.out.println(solution.isPalindrome(head)); // false
+    System.out.println(solution.isPalindrome2(head)); // false
+
+    head = createList(1);
+    printList(head);
+    System.out.println(solution.isPalindrome(head)); // false
+    System.out.println(solution.isPalindrome2(head)); // false
   }
 
   public boolean isPalindrome(ListNode head) {
@@ -79,5 +98,35 @@ class Solution {
       counter++;
     }
     return stack.isEmpty();
+  }
+
+  public boolean isPalindrome2(ListNode head) {
+    if (head.next == null)
+      return true;
+    var slow = head;
+    var fast = head;
+    var prev = head;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    var curr = prev.next;
+    var next = curr.next;
+    prev.next = null;
+    while (curr != slow) {
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+      next = curr.next;
+    }
+    if (fast != null)
+      curr = curr.next;
+    while (curr != null && prev != null) {
+      if (prev.val != curr.val)
+        return false;
+      curr = curr.next;
+      prev = prev.next;
+    }
+    return true;
   }
 }
