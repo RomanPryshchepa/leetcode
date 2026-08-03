@@ -53,16 +53,22 @@ class Solution {
         var head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
         printList(head, " > ");
         printList(solution.removeNthFromEnd(head, 2));
+        head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        printList(solution.removeNthFromEnd2(head, 2));
         System.out.println();
 
         head = new ListNode(1);
         printList(head, " > ");
         printList(solution.removeNthFromEnd(head, 1));
+        head = new ListNode(1);
+        printList(solution.removeNthFromEnd2(head, 1));
         System.out.println();
 
         head = new ListNode(1, new ListNode(2));
         printList(head, " > ");
         printList(solution.removeNthFromEnd(head, 1));
+        head = new ListNode(1, new ListNode(2));
+        printList(solution.removeNthFromEnd2(head, 1));
     }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -79,6 +85,21 @@ class Solution {
         }
         if (currN == head && cnt == n)
             return head.next;
+        currN.next = currN.next.next;
+        return head;
+    }
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        var curr = head;
+        var currN = head;
+        var cnt = 0;
+        while (cnt++ < n)
+            curr = curr.next;
+        if (curr == null)
+            return head.next;
+        while (curr.next != null) {
+            curr = curr.next;
+            currN = currN.next;
+        }
         currN.next = currN.next.next;
         return head;
     }
