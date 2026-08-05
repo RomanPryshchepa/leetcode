@@ -41,7 +41,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.canFinish(2, new int[][]{{1, 0}}));
+        System.out.println(solution.canFinish2(2, new int[][]{{1, 0}}));
         System.out.println(solution.canFinish(2, new int[][]{{1, 0}, {0, 1}}));
+        System.out.println(solution.canFinish2(2, new int[][]{{1, 0}, {0, 1}}));
+        System.out.println(solution.canFinish(6, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 1}, {5, 3}, {5, 4}}));
+        System.out.println(solution.canFinish2(6, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 1}, {5, 3}, {5, 4}}));
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -70,5 +74,33 @@ public class Solution {
             }
         }
         return courses.isEmpty();
+    }
+
+    public boolean canFinish2(int numCourses, int[][] prerequisites) {
+        var coursesAB = new HashMap<Integer, HashSet<Integer>>();
+        var coursesBA = new HashMap<Integer, HashSet<Integer>>();
+        for (var i = 0; i < numCourses; i++)
+            coursesAB.put(i, new HashSet<>());
+        for (var prerequisite : prerequisites) {
+            coursesAB.get(prerequisite[0]).add(prerequisite[1]);
+            if (!coursesBA.containsKey(prerequisite[1]))
+                coursesBA.put(prerequisite[1], new HashSet<>());
+            coursesBA.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        var hasEmpty = true;
+        while (hasEmpty) {
+            hasEmpty = false;
+            for (var courseAB : coursesAB.keySet()) {
+                if (coursesAB.get(courseAB).isEmpty()) {
+                    hasEmpty = true;
+                    if (coursesBA.containsKey(courseAB))
+                        for (var courseBA : coursesBA.get(courseAB))
+                            coursesAB.get(courseBA).remove(courseAB);
+                    coursesAB.remove(courseAB);
+                    break;
+                }
+            }
+        }
+        return coursesAB.isEmpty();
     }
 }
