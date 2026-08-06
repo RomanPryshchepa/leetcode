@@ -42,20 +42,28 @@ class Solution {
     printList(list1, " > ");
     var list = solution.deleteDuplicates(list1);
     printList(list, " > ");
+    list = solution.deleteDuplicates2(list1);
+    printList(list, " > ");
 
     list1 = createList(1, 2, 3, 3, 4, 5, 6);
     printList(list1, " > ");
     list = solution.deleteDuplicates(list1);
+    printList(list, " > ");
+    list = solution.deleteDuplicates2(list1);
+    printList(list, " > ");
+
+    list1 = createList(7, 7, 7, 7);
+    printList(list1, " > ");
+    list = solution.deleteDuplicates(list1);
+    printList(list, " > ");
+    list = solution.deleteDuplicates2(list1);
     printList(list, " > ");
 
     list1 = createList();
     printList(list1, " > ");
     list = solution.deleteDuplicates(list1);
     printList(list, " > ");
-
-    list1 = createList(7, 7, 7, 7);
-    printList(list1, " > ");
-    list = solution.deleteDuplicates(list1);
+    list = solution.deleteDuplicates2(list1);
     printList(list, " > ");
   }
 
@@ -68,6 +76,19 @@ class Solution {
         current.next = current.next.next;
       }
       current = current.next;
+    }
+    return head;
+  }
+
+  public ListNode deleteDuplicates2(ListNode head) {
+    if (head == null || head.next == null)
+      return head;
+    var curr = head;
+    while (curr != null && curr.next != null) {
+      if (curr.next.val == curr.val)
+        curr.next = curr.next.next;
+      else
+        curr = curr.next;
     }
     return head;
   }
