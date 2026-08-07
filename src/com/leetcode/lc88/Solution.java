@@ -113,6 +113,20 @@ public class Solution {
     System.out.println(Arrays.toString(num));
   }
 
+  public void merge(int[] nums1, int m, int[] nums2, int n) {
+    var pointer1 = m - 1;
+    var pointer2 = n - 1;
+    var pointer = m + n - 1;
+    while (pointer1 >= 0 && pointer2 >= 0) {
+      if (nums1[pointer1] < nums2[pointer2])
+        nums1[pointer--] = nums2[pointer2--];
+      else
+        nums1[pointer--] = nums1[pointer1--];
+    }
+    while (pointer2 >= 0)
+      nums1[pointer--] = nums2[pointer2--];
+  }
+
   public void merge2(int[] nums1, int m, int[] nums2, int n) {
     var p1 = m - 1;
     var p2 = n - 1;
@@ -125,25 +139,6 @@ public class Solution {
         nums1[p1 + p2 + 1] = nums1[p1--];
       else
         nums1[p1 + p2 + 1] = nums2[p2--];
-    }
-  }
-
-  public void merge(int[] nums1, int m, int[] nums2, int n) {
-    var pointer1 = m - 1;
-    var pointer2 = n - 1;
-    var pointer = m + n - 1;
-    while (pointer1 >= 0 && pointer2 >= 0) {
-      if (nums1[pointer1] < nums2[pointer2]) {
-        nums1[pointer--] = nums2[pointer2--];
-      } else {
-        nums1[pointer--] = nums1[pointer1--];
-      }
-    }
-    while (pointer1 >= 0) {
-      nums1[pointer--] = nums1[pointer1--];
-    }
-    while (pointer2 >= 0) {
-      nums1[pointer--] = nums2[pointer2--];
     }
   }
 }
