@@ -57,8 +57,11 @@ public class Solution {
   public static void main(String[] args) {
     var solution = new Solution();
     System.out.println(solution.evalRPN(new String[]{"2", "1", "+", "3", "*"}));
+    System.out.println(solution.evalRPN2(new String[]{"2", "1", "+", "3", "*"}));
     System.out.println(solution.evalRPN(new String[]{"4", "13", "5", "/", "+"}));
+    System.out.println(solution.evalRPN2(new String[]{"4", "13", "5", "/", "+"}));
     System.out.println(solution.evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
+    System.out.println(solution.evalRPN2(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
   }
 
   public int evalRPN(String[] tokens) {
@@ -74,4 +77,24 @@ public class Solution {
     }
     return stack.pop();
   }
+
+    public int evalRPN2(String[] tokens) {
+        var stack = new LinkedList<Integer>();
+        int a, b;
+        for (var token : tokens) {
+            if (token.length() != 1 || Character.isDigit(token.charAt(0)))
+                stack.push(Integer.parseInt(token));
+            else {
+                b = stack.pop();
+                a = stack.pop();
+                switch (token) {
+                    case "+" -> stack.push(a + b);
+                    case "-" -> stack.push(a - b);
+                    case "*" -> stack.push(a * b);
+                    case "/" -> stack.push(a / b);
+                }
+            }
+        }
+        return stack.pop();
+    }
 }
