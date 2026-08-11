@@ -57,9 +57,11 @@ class Solution {
         var solution = new Solution();
         var root = new TreeNode(2, new TreeNode(1),  new TreeNode(3));
         System.out.println(solution.isValidBST(root));
+        System.out.println(solution.isValidBST2(root));
 
         root = new TreeNode(5, new TreeNode(1), new TreeNode(4,  new TreeNode(3), new TreeNode(6)));
         System.out.println(solution.isValidBST(root));
+        System.out.println(solution.isValidBST2(root));
     }
 
     public boolean isValidBST(TreeNode root) {
@@ -77,5 +79,17 @@ class Solution {
         DFS(root.left, list);
         list.add(root.val);
         DFS(root.right, list);
+    }
+
+    public boolean isValidBST2(TreeNode root) {
+        return isValidBST2(root, (long) Integer.MIN_VALUE - 1, (long) Integer.MAX_VALUE + 1);
+    }
+
+    private boolean isValidBST2(TreeNode root, long min, long max) {
+        if (root == null)
+            return true;
+        if (root.val >= max || root.val <= min)
+            return false;
+        return isValidBST2(root.left, min, root.val) && isValidBST2(root.right, root.val, max);
     }
 }
