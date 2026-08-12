@@ -49,8 +49,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(Arrays.toString(solution.findOrder(2, new int[][]{{1, 0}})));
+        System.out.println(Arrays.toString(solution.findOrder2(2, new int[][]{{1, 0}})));
         System.out.println(Arrays.toString(solution.findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
+        System.out.println(Arrays.toString(solution.findOrder2(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
         System.out.println(Arrays.toString(solution.findOrder(1, new int[][]{})));
+        System.out.println(Arrays.toString(solution.findOrder2(1, new int[][]{})));
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -84,6 +87,35 @@ public class Solution {
         int[] res = new int[list.size()];
         for(int i = 0; i < list.size(); i++)
             res[i] = list.get(i);
+        return res;
+    }
+
+    public int[] findOrder2(int numCourses, int[][] prerequisites) {
+        var prerequisiteCnt = new int[numCourses];
+        var map = new HashMap<Integer, List<Integer>>();
+        for (var prerequisite : prerequisites) {
+            prerequisiteCnt[prerequisite[0]]++;
+            if (!map.containsKey(prerequisite[1]))
+                map.put(prerequisite[1], new LinkedList<>());
+            map.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        var res = new int[numCourses];
+        var idx = 0;
+        var hasCoursesWOpre = true;
+        while (hasCoursesWOpre) {
+            hasCoursesWOpre = false;
+            for (var i = 0; i < prerequisiteCnt.length; i++)
+                if (prerequisiteCnt[i] == 0) {
+                    res[idx++] = i;
+                    prerequisiteCnt[i] = -1;
+                    if (map.containsKey(i))
+                        for (var course : map.get(i))
+                            prerequisiteCnt[course]--;
+                    hasCoursesWOpre = true;
+                }
+        }
+        if (idx != numCourses)
+            return new int[0];
         return res;
     }
 }
