@@ -1,5 +1,7 @@
 package com.leetcode.lc621;
 
+import java.util.HashMap;
+
 /*
 621. Task Scheduler
 
@@ -51,8 +53,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.leastInterval(new char[]{'A','A','A','B','B','B'}, 2));
+        System.out.println(solution.leastInterval2(new char[]{'A','A','A','B','B','B'}, 2));
         System.out.println(solution.leastInterval(new char[]{'A','C','A','B','D','B'}, 1));
+        System.out.println(solution.leastInterval2(new char[]{'A','C','A','B','D','B'}, 1));
         System.out.println(solution.leastInterval(new char[]{'A','A','A','B','B','B'}, 3));
+        System.out.println(solution.leastInterval2(new char[]{'A','A','A','B','B','B'}, 3));
     }
 
     public int leastInterval(char[] tasks, int n) {
@@ -67,5 +72,20 @@ public class Solution {
             if (cnt == maxCnt)
                 maxTaskCnt++;
         return Math.max(tasks.length, (n + 1) * (maxCnt - 1) + maxTaskCnt);
+    }
+
+    public int leastInterval2(char[] tasks, int n) {
+        var map = new HashMap<Character, Integer>();
+        for (var ch : tasks)
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        var max = 0;
+        for (var val : map.values())
+            if (val > max)
+                max = val;
+        var maxcnt = 0;
+        for (var val : map.values())
+            if (val == max)
+                maxcnt++;
+        return Math.max((max - 1) * (n + 1) + maxcnt, tasks.length);
     }
 }
