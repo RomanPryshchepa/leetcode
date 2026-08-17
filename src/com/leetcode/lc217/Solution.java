@@ -1,5 +1,6 @@
 package com.leetcode.lc217;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,12 +41,15 @@ public class Solution {
 
     nums = new int[]{1, 2, 3, 1};
     System.out.println(solution.containsDuplicate(nums));
+    System.out.println(solution.containsDuplicate2(nums));
 
     nums = new int[]{1, 2, 3, 4};
     System.out.println(solution.containsDuplicate(nums));
+    System.out.println(solution.containsDuplicate2(nums));
 
     nums = new int[]{1, 1, 1, 3, 3, 4, 3, 2, 4, 2};
     System.out.println(solution.containsDuplicate(nums));
+    System.out.println(solution.containsDuplicate2(nums));
   }
 
   public boolean containsDuplicate(int[] nums) {
@@ -55,6 +59,14 @@ public class Solution {
         return true;
       }
     }
+    return false;
+  }
+
+  public boolean containsDuplicate2(int[] nums) {
+    Arrays.sort(nums);
+    for (var i = 1; i < nums.length; i++)
+      if (nums[i] == nums[i - 1])
+        return true;
     return false;
   }
 }
