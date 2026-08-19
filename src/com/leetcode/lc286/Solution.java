@@ -61,10 +61,17 @@ public class Solution {
                 {{2147483647,-1,0,2147483647},{2147483647,2147483647,2147483647,-1},{2147483647,-1,2147483647,-1},{0,-1,2147483647,2147483647}};
         solution.islandsAndTreasure(grid);
         System.out.println(Arrays.deepToString(grid));
+        grid = new int[][]
+                {{2147483647,-1,0,2147483647},{2147483647,2147483647,2147483647,-1},{2147483647,-1,2147483647,-1},{0,-1,2147483647,2147483647}};
+        solution.islandsAndTreasure2(grid);
+        System.out.println(Arrays.deepToString(grid));
         System.out.println();
 
         grid = new int[][] {{0,-1},{2147483647,2147483647}};
         solution.islandsAndTreasure(grid);
+        System.out.println(Arrays.deepToString(grid));
+        grid = new int[][] {{0,-1},{2147483647,2147483647}};
+        solution.islandsAndTreasure2(grid);
         System.out.println(Arrays.deepToString(grid));
     }
 
@@ -98,6 +105,39 @@ public class Solution {
                     grid[point[0]][point[1] + 1] = dist;
                     queue.add(new int[]{point[0], point[1] + 1});
                 }
+            }
+        }
+    }
+
+    public void islandsAndTreasure2(int[][] grid) {
+        var queue = new LinkedList<int[]>();
+        for (int i = 0; i < grid.length; i++)
+            for (int j = 0; j < grid[0].length; j++)
+                if (grid[i][j] == 0)
+                    queue.add(new int[] {i, j});
+        var qLen = queue.size();
+        int[] cell;
+        var distance = 1;
+        while (qLen > 0) {
+            for (int i = 0; i < qLen; i++) {
+                cell = queue.poll();
+                fillNeighbors(grid, cell[0], cell[1], distance, queue);
+            }
+            distance++;
+            qLen = queue.size();
+        }
+    }
+
+    private void fillNeighbors(int[][] grid, int row, int col, int distance, Deque<int[]> queue) {
+        var idxs = new int[] {1, 0, -1, 0, 1};
+        int i;
+        int j;
+        for (var k = 0; k < idxs.length - 1; k++) {
+            i = row + idxs[k];
+            j = col + idxs[k + 1];
+            if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length && grid[i][j] > distance) {
+                grid[i][j] = distance;
+                queue.offer(new int[] {i, j});
             }
         }
     }
