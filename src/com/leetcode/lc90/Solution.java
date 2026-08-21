@@ -1,8 +1,6 @@
 package com.leetcode.lc90;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /*
 90. Subsets II
@@ -34,7 +32,9 @@ class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.subsetsWithDup(new int[]{1, 2, 2}));
+        System.out.println(solution.subsetsWithDup2(new int[]{1, 2, 2}));
         System.out.println(solution.subsetsWithDup(new int[]{0}));
+        System.out.println(solution.subsetsWithDup2(new int[]{0}));
     }
 
     public List<List<Integer>> subsetsWithDup(int[] nums) {
@@ -56,5 +56,30 @@ class Solution {
         while (index + 1 < nums.length && nums[index + 1] == removedElement)
             index++;
         backtrack(index + 1, nums, currentSubset, result);
+    }
+
+    public List<List<Integer>> subsetsWithDup2(int[] nums) {
+        Arrays.sort(nums);
+        var result = new LinkedList<List<Integer>>();
+        var set = new HashSet<String>();
+        for (var i = 0; i < Math.pow(2, nums.length); i++)
+            getSubset(nums, i, result, set);
+        return result;
+    }
+
+    private void getSubset(int[] nums, int num, List<List<Integer>> list, Set<String> set) {
+        var result = new LinkedList<Integer>();
+        var i = 0;
+        var sb = new StringBuilder();
+        while (num > 0) {
+            if (num % 2 == 1) {
+                result.add(nums[i]);
+                sb.append(nums[i]);
+            }
+            num /= 2;
+            i++;
+        }
+        if (set.add(sb.toString()))
+            list.add(result);
     }
 }
