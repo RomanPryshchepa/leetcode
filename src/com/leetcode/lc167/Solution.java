@@ -49,43 +49,45 @@ public class Solution {
   // {1,2,3,4,5,6,7,8,9} target = 11, 2+9
 
   public static void main(String[] args) {
+    var solution = new Solution();
+
     //Input: numbers = [2,7,11,15], target = 9
     int[] numbers = new int[]{2, 7, 11, 15};
     int target = 9;
     //Output: [1,2]
-    int[] res = twoSum(numbers, target);
-    System.out.println(Arrays.toString(res));
+    System.out.println(Arrays.toString(solution.twoSum(numbers, target)));
+    System.out.println(Arrays.toString(solution.twoSum2(numbers, target)));
 
 //    Input: numbers = [2,3,4], target = 6
     numbers = new int[]{2, 3, 4};
     target = 6;
 //    Output: [1,3]
-    res = twoSum(numbers, target);
-    System.out.println(Arrays.toString(res));
+    System.out.println(Arrays.toString(solution.twoSum(numbers, target)));
+    System.out.println(Arrays.toString(solution.twoSum2(numbers, target)));
 
     //Input: numbers = [-1,0], target = -1
     numbers = new int[]{-1, 0};
     target = -1;
     //Output: [1,2]
-    res = twoSum(numbers, target);
-    System.out.println(Arrays.toString(res));
+    System.out.println(Arrays.toString(solution.twoSum(numbers, target)));
+    System.out.println(Arrays.toString(solution.twoSum2(numbers, target)));
 
     //Input: numbers = [0,0,3,4], target = 0
     numbers = new int[]{0, 0, 3, 4};
     target = 0;
     //Output: [1,2]
-    res = twoSum(numbers, target);
-    System.out.println(Arrays.toString(res));
+    System.out.println(Arrays.toString(solution.twoSum(numbers, target)));
+    System.out.println(Arrays.toString(solution.twoSum2(numbers, target)));
 
     //Input: numbers = [0,1,1,1,1,3,4], target = 3
     numbers = new int[]{0, 1, 1, 1, 1, 3, 4};
     target = 3;
     //Output: [1,6]
-    res = twoSum(numbers, target);
-    System.out.println(Arrays.toString(res));
+    System.out.println(Arrays.toString(solution.twoSum(numbers, target)));
+    System.out.println(Arrays.toString(solution.twoSum2(numbers, target)));
   }
 
-  public static int[] twoSum(int[] numbers, int target) {
+  public int[] twoSum(int[] numbers, int target) {
     int i = 0;
     int j = numbers.length - 1;
     while (i < j) {
@@ -99,5 +101,31 @@ public class Solution {
       }
     }
     return new int[0];
+  }
+
+  public int[] twoSum2(int[] numbers, int target) {
+    var j = -1;
+    for (var i = 0; i < numbers.length - 1; i++) {
+      j = find(numbers, target - numbers[i], i + 1);
+      if (j != -1)
+        return new int[]{i + 1, j + 1};
+    }
+    return new int[]{numbers.length - 1, numbers.length};
+  }
+
+  private int find(int[] numbers, int target, int st) {
+    var start = st;
+    var end = numbers.length - 1;
+    var mid = start + (end - start) / 2;
+    while (start <= end) {
+      if (numbers[mid] == target)
+        return mid;
+      if (numbers[mid] < target)
+        start = mid + 1;
+      else
+        end = mid - 1;
+      mid = start + (end - start) / 2;
+    }
+    return -1;
   }
 }
