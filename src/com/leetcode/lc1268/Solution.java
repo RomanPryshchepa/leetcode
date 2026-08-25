@@ -45,7 +45,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.suggestedProducts(new String[] {"mobile","mouse","moneypot","monitor","mousepad"}, "mouse"));
+        System.out.println(solution.suggestedProducts2(new String[] {"mobile","mouse","moneypot","monitor","mousepad"}, "mouse"));
         System.out.println(solution.suggestedProducts(new String[] {"havana"}, "havana"));
+        System.out.println(solution.suggestedProducts2(new String[] {"havana"}, "havana"));
     }
 
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
@@ -65,5 +67,32 @@ public class Solution {
             result.add(words);
         }
         return result;
+    }
+
+    public List<List<String>> suggestedProducts2(String[] products, String searchWord) {
+        Arrays.sort(products);
+        List<List<String>> result = new LinkedList<>();
+        var sb = new StringBuilder();
+        var currentList = Arrays.asList(products);
+        for (int i = 0; i < searchWord.length(); i++) {
+            sb.append(searchWord.charAt(i));
+            currentList = getList(currentList, sb.toString());
+            result.add(getFirst3(currentList));
+        }
+        return result;
+    }
+
+    private List<String> getList(List<String> list, String word) {
+        var result = new LinkedList<String>();
+        for (String s : list)
+            if (s.startsWith(word))
+                result.add(s);
+        return result;
+    }
+
+    private List<String> getFirst3(List<String> list) {
+        if (list.size() <= 3)
+            return list;
+        return list.subList(0, 3);
     }
 }
