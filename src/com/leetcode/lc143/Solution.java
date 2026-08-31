@@ -53,6 +53,66 @@ public class Solution {
     printList(head, " > ");
     solution.reorderList2(head);
     printList(head, " > ");
+    System.out.println();
+
+    head = createList(1, 2, 3, 4, 5);
+    printList(head, " > ");
+    solution.reorderList3(head);
+    printList(head, " > ");
+  }
+
+  public void reorderList3(ListNode head) {
+    if (head == null || head.next == null)
+      return;
+    var slow = head;
+    var fast = head.next;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    var list2 = slow.next;
+    slow.next = null;
+    list2 = reverseList(list2);
+    var curr1 = head;
+    var curr2 = list2;
+    while (curr2 != null) {
+      var next1 = curr1.next;
+      var next2 = curr2.next;
+      curr1.next = curr2;
+      curr2.next = next1;
+      curr1 = next1;
+      curr2 = next2;
+    }
+  }
+
+  private ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode next;
+    var curr = head;
+    while (curr != null) {
+      next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+    return prev;
+  }
+
+  private ListNode reverseList2(ListNode head) {
+    if (head == null || head.next == null)
+      return head;
+    var prev = head;
+    var curr = prev.next;
+    var next = curr.next;
+    prev.next = null;
+    while (next != null) {
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+      next = curr.next;
+    }
+    curr.next = prev;
+    return curr;
   }
 
   public void reorderList(ListNode head) {
