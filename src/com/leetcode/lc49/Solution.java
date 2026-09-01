@@ -39,10 +39,32 @@ public class Solution {
         Solution solution = new Solution();
         System.out.println(solution.groupAnagrams(new String[] { "eat", "tea", "tan", "ate", "nat", "bat" }));
         System.out.println(solution.groupAnagrams2(new String[] { "eat", "tea", "tan", "ate", "nat", "bat" }));
+        System.out.println(solution.groupAnagrams3(new String[] { "eat", "tea", "tan", "ate", "nat", "bat" }));
         System.out.println(solution.groupAnagrams(new String[] { "" }));
         System.out.println(solution.groupAnagrams2(new String[] { "" }));
+        System.out.println(solution.groupAnagrams3(new String[] { "" }));
         System.out.println(solution.groupAnagrams(new String[] { "a" }));
         System.out.println(solution.groupAnagrams2(new String[] { "a" }));
+        System.out.println(solution.groupAnagrams3(new String[] { "a" }));
+    }
+
+    public List<List<String>> groupAnagrams3(String[] strs) {
+        var result = new LinkedList<List<String>>();
+        var wasAdded = false;
+        for (var str : strs) {
+            wasAdded = false;
+            for (var list : result)
+                if (isAnagram(str, list.getFirst())) {
+                    list.add(str);
+                    wasAdded = true;
+                    break;
+                }
+            if (!wasAdded)
+                result.add(new LinkedList<>() {{
+                    add(str);
+                }});
+        }
+        return result;
     }
 
     public List<List<String>> groupAnagrams2(String[] strs) {
@@ -67,13 +89,15 @@ public class Solution {
     }
 
     private boolean isAnagram(String str1, String str2) {
-        var letters = new int[26];
-        for (char c : str1.toCharArray())
-            letters[c - 'a']++;
-        for (char c : str2.toCharArray())
-            letters[c - 'a']--;
-        for (var i : letters)
-            if (i != 0)
+        if (str1.length() != str2.length())
+            return false;
+        var letterCnt = new int[26];
+        for (var ch : str1.toCharArray())
+            letterCnt[ch - 'a']++;
+        for (var ch : str2.toCharArray())
+            letterCnt[ch - 'a']--;
+        for (var cnt : letterCnt)
+            if (cnt != 0)
                 return false;
         return true;
     }
