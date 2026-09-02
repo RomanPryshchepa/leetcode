@@ -62,6 +62,8 @@ public class Solution {
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
     printList(solution.mergeTwoLists3(head1, head2), " > ");
+    printList(solution.mergeTwoLists4(head1, head2), " > ");
+    System.out.println("=====");
 
     head1 = createList();
     head2 = createList();
@@ -69,6 +71,9 @@ public class Solution {
     printList(head2, " > ");
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
+    printList(solution.mergeTwoLists3(head1, head2), " > ");
+    printList(solution.mergeTwoLists4(head1, head2), " > ");
+    System.out.println("=====");
 
     head1 = createList(1);
     head2 = createList(0);
@@ -76,6 +81,9 @@ public class Solution {
     printList(head2, " > ");
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
+    printList(solution.mergeTwoLists3(head1, head2), " > ");
+    printList(solution.mergeTwoLists4(head1, head2), " > ");
+    System.out.println("=====");
 
     head1 = createList(1, 2, 3);
     head2 = createList(4, 5, 6);
@@ -84,6 +92,8 @@ public class Solution {
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
     printList(solution.mergeTwoLists3(head1, head2), " > ");
+    printList(solution.mergeTwoLists4(head1, head2), " > ");
+    System.out.println("=====");
 
     head1 = createList(4, 5, 6);
     head2 = createList(1, 2, 3);
@@ -92,6 +102,7 @@ public class Solution {
     printList(solution.mergeTwoLists(head1, head2), " > ");
     printList(solution.mergeTwoLists2(head1, head2), " > ");
     printList(solution.mergeTwoLists3(head1, head2), " > ");
+    printList(solution.mergeTwoLists4(head1, head2), " > ");
   }
 
   public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -212,5 +223,33 @@ public class Solution {
       current = current.next;
     }
     return result;
+  }
+
+  public ListNode mergeTwoLists4(ListNode list1, ListNode list2) {
+    var result = new ListNode();
+    var current1 = list1;
+    var current2 = list2;
+    var current = result;
+    while (current1 != null && current2 != null) {
+      if (current1.val < current2.val) {
+        current.next = new ListNode(current1.val);
+        current1 = current1.next;
+      } else {
+        current.next = new ListNode(current2.val);
+        current2 = current2.next;
+      }
+      current = current.next;
+    }
+    while (current1 != null) {
+      current.next = new ListNode(current1.val);
+      current1 = current1.next;
+      current = current.next;
+    }
+    while (current2 != null) {
+      current.next = new ListNode(current2.val);
+      current2 = current2.next;
+      current = current.next;
+    }
+    return result.next;
   }
 }
