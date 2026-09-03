@@ -50,12 +50,28 @@ public class Solution {
         System.out.println(solution.numIslands(grid));
 
         grid = new char[][]{
+                {'1','1','1','1','0'},
+                {'1','1','0','1','0'},
+                {'1','1','0','0','0'},
+                {'0','0','0','0','0'}
+        };
+        System.out.println(solution.numIslands2(grid));
+
+        grid = new char[][]{
                 {'1','1','0','0','0'},
                 {'1','1','0','0','0'},
                 {'0','0','1','0','0'},
                 {'0','0','0','1','1'}
         };
         System.out.println(solution.numIslands(grid));
+
+        grid = new char[][]{
+                {'1','1','0','0','0'},
+                {'1','1','0','0','0'},
+                {'0','0','1','0','0'},
+                {'0','0','0','1','1'}
+        };
+        System.out.println(solution.numIslands2(grid));
     }
 
     public int numIslands(char[][] grid) {
@@ -82,5 +98,31 @@ public class Solution {
         }
         if (col < grid[0].length - 1)
             isIsland(grid, row, col + 1);
+    }
+
+    public int numIslands2(char[][] grid) {
+        var result = 0;
+        for (var i = 0; i < grid.length; i++)
+            for (var j = 0; j < grid[i].length; j++)
+                if (grid[i][j] == '1') {
+                    markIsland(i, j, grid);
+                    result++;
+                }
+        return result;
+    }
+
+    private void markIsland(int x, int y, char[][] grid) {
+        if (grid[x][y] == '0' || grid[x][y] == '2')
+            return;
+        grid[x][y] = '2';
+        var idx = new int[] {1, 0, -1, 0, 1};
+        int i;
+        int j;
+        for (var k = 1; k < idx.length; k++) {
+            i = x + idx[k - 1];
+            j = y + idx[k];
+            if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length && grid[i][j] == '1')
+                markIsland(i, j, grid);
+        }
     }
 }
