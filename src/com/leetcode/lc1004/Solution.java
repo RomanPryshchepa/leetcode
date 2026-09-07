@@ -1,5 +1,7 @@
 package com.leetcode.lc1004;
 
+import java.util.LinkedList;
+
 /*
 1004. Max Consecutive Ones III
 
@@ -33,7 +35,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.longestOnes(new int[]{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2));
+        System.out.println(solution.longestOnes2(new int[]{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2));
         System.out.println(solution.longestOnes(new int[]{0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1}, 3));
+        System.out.println(solution.longestOnes2(new int[]{0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1}, 3));
     }
 
     public int longestOnes(int[] nums, int k) {
@@ -51,5 +55,22 @@ public class Solution {
             }
         res = Math.max(res, right - left);
         return res;
+    }
+
+    public int longestOnes2(int[] nums, int k) {
+        var result = 0;
+        var lp = -1;
+        var zeros = new LinkedList<Integer>();
+        for (var rp = 0; rp < nums.length; rp++) {
+            if (nums[rp] == 0) {
+                zeros.add(rp);
+                if (k == 0)
+                    lp = zeros.poll();
+                else
+                    k--;
+            }
+            result = Math.max(result, rp - lp);
+        }
+        return result;
     }
 }
