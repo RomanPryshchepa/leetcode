@@ -1,6 +1,7 @@
 package com.leetcode.lc853;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 
 /*
 853. Car Fleet
@@ -75,86 +76,55 @@ public class Solution {
     int[] speed = new int[]{2, 4, 1, 1, 3};
     System.out.println(solution.carFleet(target, position, speed));//3
     System.out.println(solution.carFleet2(target, position, speed));//3
+    System.out.println(solution.carFleet3(target, position, speed));//3
     System.out.println();
-    // {10,2} {8,4} {0,1} {5,1} {3,3}
-    // {10,1} {8,1} {0,12} {5,7} {3,3}
-    // {10,1} {8,1} {5,7} {3,3} {0,12}
 
-    //Input: target = 10, position = [3], speed = [3]
-    //Output: 1
     target = 10;
     position = new int[]{3};
     speed = new int[]{3};
     System.out.println(solution.carFleet(target, position, speed));//1
     System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println(solution.carFleet3(target, position, speed));//1
     System.out.println();
-    //Input: target = 100, position = [0,2,4], speed = [4,2,1]
-    //Output: 1
+
     target = 100;
     position = new int[]{0, 2, 4};
     speed = new int[]{4, 2, 1};
     System.out.println(solution.carFleet(target, position, speed));//1
     System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println(solution.carFleet3(target, position, speed));//1
     System.out.println();
 
-    //target = 20
-    //position = [6, 2, 17]
-    //speed = [3, 9, 2]
-    //Output:3
-    //Expected:2
     target = 20;
     position = new int[]{6, 2, 17};
     speed = new int[]{3, 9, 2};
     System.out.println(solution.carFleet(target, position, speed));//2
     System.out.println(solution.carFleet2(target, position, speed));//2
+    System.out.println(solution.carFleet3(target, position, speed));//2
     System.out.println();
-//    position = new int[]{2,6,17};
-//    speed = new int[]{9,3,2};
-    // {2,5,2}
-    //  <---
-    // {9,3}, {11,9} (9, 3), {19,2}
-    // {12,3}, {20,9}, {21,2}
 
-    //target = 10
-    //position = [8,3,7,4,6,5]
-    //speed = [4,4,4,4,4,4]
-    //Output:2
-    //Expected:6
     target = 10;
     position = new int[]{8, 3, 7, 4, 6, 5};
     speed = new int[]{4, 4, 4, 4, 4, 4};
     System.out.println(solution.carFleet(target, position, speed));//6
     System.out.println(solution.carFleet2(target, position, speed));//6
+    System.out.println(solution.carFleet3(target, position, speed));//6
     System.out.println();
-    //{8,4},{3,4},{7,4},{4,4},{6,4},{5,4}
-    //{8,1},{3,2},{7,1},{4,2},{6,1},{5,2}
-    //{12,4},{7,4},{11,4},{8,4},{10,4},{9,4}
 
-    //target = 10
-    //position = [2,4]
-    //speed = [3,2]
-    //Output:2
-    //Expected:1
     target = 10;
     position = new int[]{2, 4};
     speed = new int[]{3, 2};
     System.out.println(solution.carFleet(target, position, speed));//1
     System.out.println(solution.carFleet2(target, position, speed));//1
+    System.out.println(solution.carFleet3(target, position, speed));//1
     System.out.println();
-    //{2, 3} {4, 2}
-    //{2, 3, 11} {4, 3, 10}
 
-    //target = 31
-    //position = [5,26,18,25,29,21,22,12,19,6]
-    //speed = [7,6,6,4,3,4,9,7,6,4]
-    //Use Testcase
-    //Output:4
-    //Expected:6
     target = 31;
     position = new int[]{5, 26, 18, 25, 29, 21, 22, 12, 19, 6};
     speed = new int[]{7, 6, 6, 4, 3, 4, 9, 7, 6, 4};
     System.out.println(solution.carFleet(target, position, speed));//6
     System.out.println(solution.carFleet2(target, position, speed));//6
+    System.out.println(solution.carFleet3(target, position, speed));//6
   }
 
   public int carFleet(int target, int[] position, int[] speed) {
@@ -193,4 +163,19 @@ public class Solution {
     }
     return fleetCount;
   }
+
+  public int carFleet3(int target, int[] position, int[] speed) {
+    var map = new TreeMap<Integer, Double>((a, b) -> b - a);
+    for (var i = 0; i < position.length; i++)
+      map.put(position[i], 1.0 * (target - position[i]) / speed[i]);
+    var result = 0;
+    var currMaxTime = 0.0;
+    for (var time : map.values())
+      if (time > currMaxTime) {
+        currMaxTime = time;
+        result++;
+      }
+    return result;
+  }
+
 }
