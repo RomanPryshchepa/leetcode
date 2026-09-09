@@ -43,68 +43,67 @@ public class Solution {
     nums = new int[]{1, 3, 5, 6};
     target = 5;
     System.out.println(solution.searchInsert(nums, target)); // 2
+    System.out.println(solution.searchInsert2(nums, target)); // 2
+    System.out.println(solution.searchInsert3(nums, target)); // 2
 
     System.out.println("======================");
 
     nums = new int[]{1, 3, 5, 6};
     target = 2;
     System.out.println(solution.searchInsert(nums, target)); // 1
+    System.out.println(solution.searchInsert2(nums, target)); // 1
+    System.out.println(solution.searchInsert3(nums, target)); // 1
 
     System.out.println("======================");
 
     nums = new int[]{1, 3, 5, 6};
     target = 7;
     System.out.println(solution.searchInsert(nums, target)); // 4
+    System.out.println(solution.searchInsert2(nums, target)); // 4
+    System.out.println(solution.searchInsert3(nums, target)); // 4
 
-    System.out.println("======================");
     System.out.println("======================");
 
     nums = new int[]{1, 3, 5, 6};
     target = 0;
     System.out.println(solution.searchInsert(nums, target)); // 0
+    System.out.println(solution.searchInsert2(nums, target)); // 0
+    System.out.println(solution.searchInsert3(nums, target)); // 0
 
     System.out.println("======================");
 
     nums = new int[]{1, 3, 4, 5, 6};
     target = 2;
     System.out.println(solution.searchInsert(nums, target)); // 1
+    System.out.println(solution.searchInsert2(nums, target)); // 1
+    System.out.println(solution.searchInsert3(nums, target)); // 1
 
     System.out.println("======================");
 
     nums = new int[]{1};
     target = 0;
     System.out.println(solution.searchInsert(nums, target)); // 0
+    System.out.println(solution.searchInsert2(nums, target)); // 0
+    System.out.println(solution.searchInsert3(nums, target)); // 0
 
     System.out.println("======================");
 
     nums = new int[]{1, 3};
     target = 1;
     System.out.println(solution.searchInsert(nums, target)); // 0
+    System.out.println(solution.searchInsert2(nums, target)); // 0
+    System.out.println(solution.searchInsert3(nums, target)); // 0
 
     System.out.println("======================");
 
     nums = new int[]{1, 3, 5, 7, 9};
     target = 6; //6
     System.out.println(solution.searchInsert(nums, target)); // 0
+    System.out.println(solution.searchInsert2(nums, target)); // 0
+    System.out.println(solution.searchInsert3(nums, target)); // 0
   }
 
   public int searchInsert(int[] nums, int target) {
-    int start = 0;
-    int end = nums.length - 1;
-    while (start <= end) {
-      int mid = start + (end - start) / 2;
-      if (nums[mid] == target) {
-        return mid;
-      } else if (nums[mid] < target) {
-        start = mid + 1;
-      } else {
-        end = mid - 1;
-      }
-    }
-    return start;
-  }
-
-  public int searchInsertOld(int[] nums, int target) {
     if (target < nums[0]) {
       return 0;
     }
@@ -133,5 +132,37 @@ public class Solution {
       }
     } while (endIdx - beginIdx != 1 && endIdx != beginIdx);
     return endIdx;
+  }
+
+  public int searchInsert2(int[] nums, int target) {
+    int start = 0;
+    int end = nums.length - 1;
+    while (start <= end) {
+      int mid = start + (end - start) / 2;
+      if (nums[mid] == target) {
+        return mid;
+      } else if (nums[mid] < target) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+    return start;
+  }
+
+  public int searchInsert3(int[] nums, int target) {
+    var st = 0;
+    var end = nums.length - 1;
+    var mid = st + (end - st) / 2;
+    while (st <= end) {
+      if (nums[mid] == target)
+        return mid;
+      if (nums[mid] > target)
+        end = end - 1;
+      else
+        st = mid + 1;
+      mid = st + (end - st) / 2;
+    }
+    return mid;
   }
 }
