@@ -51,7 +51,12 @@ import java.util.Queue;
 class Solution {
 
   public static void main(String[] args) {
-
+    var solution = new Solution();
+    var root =  new TreeNode(2, new TreeNode(1), new TreeNode(3));
+    TreeNode.printTree(solution.invertTree(root));
+    System.out.println();
+    root =  new TreeNode(2, new TreeNode(1), new TreeNode(3));
+    TreeNode.printTree(solution.invertTree2(root));
   }
 
   public TreeNode invertTree(TreeNode root) {
@@ -70,5 +75,28 @@ class Solution {
       }
     }
     return root;
+  }
+
+  public TreeNode invertTree2(TreeNode root) {
+    invertTreeRec(root);
+    return root;
+  }
+
+  private void invertTreeRec(TreeNode root) {
+    if (root == null || root.left == null && root.right == null)
+      return;
+    if (root.right == null) {
+      root.right = root.left;
+      root.left = null;
+    } else if (root.left == null) {
+      root.left = root.right;
+      root.right = null;
+    } else {
+      var left = root.left;
+      root.left = root.right;
+      root.right = left;
+    }
+    invertTreeRec(root.left);
+    invertTreeRec(root.right);
   }
 }
