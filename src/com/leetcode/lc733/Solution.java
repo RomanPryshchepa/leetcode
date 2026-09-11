@@ -57,7 +57,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(Arrays.deepToString(solution.floodFill(new int[][]{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2)));
+        System.out.println(Arrays.deepToString(solution.floodFill2(new int[][]{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2)));
         System.out.println(Arrays.deepToString(solution.floodFill(new int[][]{{0, 0, 0}, {0, 0, 0}}, 0, 0, 0)));
+        System.out.println(Arrays.deepToString(solution.floodFill2(new int[][]{{0, 0, 0}, {0, 0, 0}}, 0, 0, 0)));
     }
 
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
@@ -90,5 +92,36 @@ public class Solution {
         if (parent[1] < image[0].length - 1 && image[parent[0]][parent[1] + 1] == color)
             result.add(new int[]{parent[0], parent[1] + 1});
         return result;
+    }
+
+    public int[][] floodFill2(int[][] image, int sr, int sc, int color) {
+        if (image[sr][sc] == color)
+            return image;
+        var oldColor = image[sr][sc];
+        var list = new LinkedList<int[]>();
+        list.add(new int[]{sr, sc});
+        var len = list.size();
+        int[] cell;
+        while (len > 0) {
+            for (var k = 0; k < len; k++) {
+                cell = list.poll();
+                image[cell[0]][cell[1]] = color;
+                saveNeighbours(image, cell[0], cell[1], oldColor, list);
+            }
+            len = list.size();
+        }
+        return image;
+    }
+
+    private void saveNeighbours(int[][] image, int sr, int sc, int color, List<int[]> list) {
+        var idx = new int[] {1, 0, -1, 0, 1};
+        int i;
+        int j;
+        for (var k = 1; k < idx.length; k++) {
+            i = sr + idx[k - 1];
+            j = sc + idx[k];
+            if (i >= 0 && i < image.length && j >= 0 && j < image[i].length && image[i][j] == color)
+                list.add(new int[] {i, j});
+        }
     }
 }
