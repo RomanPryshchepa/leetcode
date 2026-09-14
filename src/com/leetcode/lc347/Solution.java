@@ -47,10 +47,13 @@ public class Solution {
         var solution = new Solution();
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1,1,1,2,2,3}, 2)));
         System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1,1,1,2,2,3}, 2)));
+        System.out.println(Arrays.toString(solution.topKFrequent3(new int[]{1,1,1,2,2,3}, 2)));
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1}, 1)));
         System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1}, 1)));
+        System.out.println(Arrays.toString(solution.topKFrequent3(new int[]{1}, 1)));
         System.out.println(Arrays.toString(solution.topKFrequent(new int[]{1,2,1,2,1,2,3,1,3,2}, 2)));
         System.out.println(Arrays.toString(solution.topKFrequent2(new int[]{1,2,1,2,1,2,3,1,3,2}, 2)));
+        System.out.println(Arrays.toString(solution.topKFrequent3(new int[]{1,2,1,2,1,2,3,1,3,2}, 2)));
     }
 
     public int[] topKFrequent(int[] nums, int k) {
@@ -92,5 +95,20 @@ public class Solution {
         while (k-- > 0)
             res[i++] = queue.poll().firstItem();
         return res;
+    }
+
+    public int[] topKFrequent3(int[] nums, int k) {
+        var map = new HashMap<Integer, Integer>();
+        for (var num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        var list = new LinkedList<int[]>();
+        for (var key : map.keySet())
+            list.add(new int[] {key, map.get(key)});
+        list.sort((a, b) -> b[1] - a[1]);
+        var result = new int[k];
+        for (var i = 0; i < k; i++)
+            result[i] = list.poll()[0];
+        return result;
     }
 }
