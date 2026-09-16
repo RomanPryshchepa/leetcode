@@ -33,12 +33,13 @@ Constraints:
 public class Solution {
 
   public static void main(String[] args) {
-    int[] nums = new int[]{100, 4, 200, 1, 3, 2};
-    System.out.println(longestConsecutive(nums));
-    nums = new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1};
-    System.out.println(longestConsecutive(nums));
-    nums = new int[]{1, 2, 0, 1};
-    System.out.println(longestConsecutive(nums));
+    var solution = new Solution();
+    System.out.println(solution.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
+    System.out.println(solution.longestConsecutive2(new int[]{100, 4, 200, 1, 3, 2}));
+    System.out.println(solution.longestConsecutive(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+    System.out.println(solution.longestConsecutive2(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+    System.out.println(solution.longestConsecutive(new int[]{1, 2, 0, 1}));
+    System.out.println(solution.longestConsecutive2(new int[]{1, 2, 0, 1}));
 
   }
 
@@ -46,7 +47,7 @@ public class Solution {
   // 2 1 3 1 1 5 -> 3
   // 0 0 5 3 4 9 -> 3
 
-  public static int longestConsecutive(int[] nums) {
+  public int longestConsecutive(int[] nums) {
     if (nums.length == 0) {
       return 0;
     }
@@ -67,5 +68,22 @@ public class Solution {
       res = cur;
     }
     return res;
+  }
+
+  public int longestConsecutive2(int[] nums) {
+    if (nums.length < 2)
+      return nums.length;
+    Arrays.sort(nums);
+    var result = 1;
+    var curr = 1;
+    for (var i = 1; i < nums.length; i++) {
+      if (nums[i] == nums[i - 1] + 1)
+        curr++;
+      else if (nums[i] != nums[i - 1]) {
+        result = Math.max(result, curr);
+        curr = 1;
+      }
+    }
+    return Math.max(result, curr);
   }
 }
