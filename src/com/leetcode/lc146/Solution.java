@@ -44,7 +44,7 @@ At most 2 * 105 calls will be made to get and put.
  */
 public class Solution {
     public static void main(String[] args) {
-        LRUCache lRUCache = new LRUCache(2);
+        var lRUCache = new LRUCache(2);
         lRUCache.put(1, 1);                     // cache is {1=1}
         lRUCache.put(2, 2);                     // cache is {1=1, 2=2}
         System.out.println(lRUCache.get(1));    // return 1
@@ -54,5 +54,16 @@ public class Solution {
         System.out.println(lRUCache.get(1));    // return -1 (not found)
         System.out.println(lRUCache.get(3));    // return 3
         System.out.println(lRUCache.get(4));    // return 4
+
+        var lRUCache2 = new LRUCache2(2);
+        lRUCache2.put(1, 1);                     // cache is {1=1}
+        lRUCache2.put(2, 2);                     // cache is {1=1, 2=2}
+        System.out.println(lRUCache2.get(1));    // return 1
+        lRUCache2.put(3, 3);                     // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+        System.out.println(lRUCache2.get(2));    // returns -1 (not found)
+        lRUCache2.put(4, 4);                     // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+        System.out.println(lRUCache2.get(1));    // return -1 (not found)
+        System.out.println(lRUCache2.get(3));    // return 3
+        System.out.println(lRUCache2.get(4));    // return 4
     }
 }
