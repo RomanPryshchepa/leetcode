@@ -80,6 +80,8 @@ class Solution {
         solution.printList(node0);
         var newHead = solution.copyRandomList(node0);
         solution.printList(newHead);
+        newHead = solution.copyRandomList2(node0);
+        solution.printList(newHead);
     }
 
     public Node copyRandomList(Node head) {
@@ -104,6 +106,26 @@ class Solution {
             newCurr = newCurr.next;
         }
         return newHead;
+    }
+
+    public Node copyRandomList2(Node head) {
+        var map = new HashMap<Node, Node>();
+        var newList = new Node(0);
+        var curr = head;
+        var newCurr = newList;
+        while (curr != null) {
+            newCurr.next = new Node(curr.val);
+            map.put(curr, newCurr.next);
+            curr = curr.next;
+            newCurr = newCurr.next;
+        }
+        for (var key : map.keySet()) {
+            if (key.random == null)
+                map.get(key).random = null;
+            else
+                map.get(key).random = map.get(key.random);
+        }
+        return newList.next;
     }
 
     private void printList(Node head) {
