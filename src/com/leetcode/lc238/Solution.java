@@ -39,7 +39,9 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(Arrays.toString(solution.productExceptSelf(new int[]{1, 2, 3, 4})));
-        System.out.println(Arrays.toString(solution.productExceptSelf(new int[]{-1,1,0,-3,3})));
+        System.out.println(Arrays.toString(solution.productExceptSelf2(new int[]{1, 2, 3, 4})));
+        System.out.println(Arrays.toString(solution.productExceptSelf(new int[]{-1, 1, 0, -3, 3})));
+        System.out.println(Arrays.toString(solution.productExceptSelf2(new int[]{-1, 1, 0, -3, 3})));
     }
 
     public int[] productExceptSelf(int[] nums) {
@@ -55,5 +57,27 @@ public class Solution {
         for (var i = 0; i < nums.length; i++)
             result[i] = prefSum[i] * suffSum[i + 1];
         return result;
+    }
+
+    public int[] productExceptSelf2(int[] nums) {
+        int[] prefix = new int[nums.length];
+        int prod = prefix[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            prod *= nums[i-1];
+            prefix[i] = prod;
+        }
+
+        int[] suffix = new int[nums.length];
+        prod = suffix[nums.length - 1] = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            prod *= nums[i + 1];
+            suffix[i] = prod;
+        }
+
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = prefix[i] * suffix[i];
+        }
+        return res;
     }
 }
