@@ -70,17 +70,21 @@ class Solution {
         var root = new TreeNode(1, new TreeNode(2, null, new TreeNode(5)),  new TreeNode(3,  null, new TreeNode(4)));
         System.out.println(solution.rightSideView(root));
         System.out.println(solution.rightSideView2(root));
+        System.out.println(solution.rightSideView3(root));
 
         root = new TreeNode(1, new TreeNode(2, new TreeNode(4, new TreeNode(5), null), null), new TreeNode(3));
         System.out.println(solution.rightSideView(root));
         System.out.println(solution.rightSideView2(root));
+        System.out.println(solution.rightSideView3(root));
 
         root = new TreeNode(1, null, new TreeNode(3));
         System.out.println(solution.rightSideView(root));
         System.out.println(solution.rightSideView2(root));
+        System.out.println(solution.rightSideView3(root));
 
         System.out.println(solution.rightSideView(null));
         System.out.println(solution.rightSideView2(null));
+        System.out.println(solution.rightSideView3(null));
     }
 
     public List<Integer> rightSideView(TreeNode root) {
@@ -124,6 +128,28 @@ class Solution {
                     result.add(node.val);
             }
             qLen = queue.size();
+        }
+        return result;
+    }
+
+    public List<Integer> rightSideView3(TreeNode root) {
+        var result = new LinkedList<Integer>();
+        if (root == null)
+            return result;
+        var list = new LinkedList<TreeNode>();
+        list.addFirst(root);
+        var len = list.size();
+        TreeNode node;
+        while (len > 0) {
+            result.add(list.getLast().val);
+            for (var i = 0; i < len; i++) {
+                node = list.removeFirst();
+                if (node.left != null)
+                    list.addLast(node.left);
+                if (node.right != null)
+                    list.addLast(node.right);
+            }
+            len = list.size();
         }
         return result;
     }
