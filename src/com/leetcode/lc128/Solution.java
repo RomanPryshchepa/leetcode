@@ -1,6 +1,7 @@
 package com.leetcode.lc128;
 
 import java.util.Arrays;
+import java.util.TreeSet;
 
 /*
 128. Longest Consecutive Sequence
@@ -36,10 +37,13 @@ public class Solution {
     var solution = new Solution();
     System.out.println(solution.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
     System.out.println(solution.longestConsecutive2(new int[]{100, 4, 200, 1, 3, 2}));
+    System.out.println(solution.longestConsecutive3(new int[]{100, 4, 200, 1, 3, 2}));
     System.out.println(solution.longestConsecutive(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
     System.out.println(solution.longestConsecutive2(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+    System.out.println(solution.longestConsecutive3(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
     System.out.println(solution.longestConsecutive(new int[]{1, 2, 0, 1}));
     System.out.println(solution.longestConsecutive2(new int[]{1, 2, 0, 1}));
+    System.out.println(solution.longestConsecutive3(new int[]{1, 2, 0, 1}));
 
   }
 
@@ -83,6 +87,27 @@ public class Solution {
         result = Math.max(result, curr);
         curr = 1;
       }
+    }
+    return Math.max(result, curr);
+  }
+
+  public int longestConsecutive3(int[] nums) {
+    if (nums.length < 2)
+      return nums.length;
+    var set = new TreeSet<Integer>();
+    for (var num : nums)
+      set.add(num);
+    var result = 1;
+    var curr = 1;
+    var prev = set.pollFirst();
+    for (var num : set) {
+      if (num == prev + 1)
+        curr++;
+      else {
+        result = Math.max(result, curr);
+        curr = 1;
+      }
+      prev = num;
     }
     return Math.max(result, curr);
   }
