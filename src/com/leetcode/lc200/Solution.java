@@ -1,5 +1,7 @@
 package com.leetcode.lc200;
 
+import java.util.LinkedList;
+
 /*
 200. Number of Islands
 
@@ -58,6 +60,14 @@ public class Solution {
         System.out.println(solution.numIslands2(grid));
 
         grid = new char[][]{
+                {'1','1','1','1','0'},
+                {'1','1','0','1','0'},
+                {'1','1','0','0','0'},
+                {'0','0','0','0','0'}
+        };
+        System.out.println(solution.numIslands3(grid));
+
+        grid = new char[][]{
                 {'1','1','0','0','0'},
                 {'1','1','0','0','0'},
                 {'0','0','1','0','0'},
@@ -72,6 +82,14 @@ public class Solution {
                 {'0','0','0','1','1'}
         };
         System.out.println(solution.numIslands2(grid));
+
+        grid = new char[][]{
+                {'1','1','0','0','0'},
+                {'1','1','0','0','0'},
+                {'0','0','1','0','0'},
+                {'0','0','0','1','1'}
+        };
+        System.out.println(solution.numIslands3(grid));
     }
 
     public int numIslands(char[][] grid) {
@@ -123,6 +141,42 @@ public class Solution {
             j = y + idx[k];
             if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length && grid[i][j] == '1')
                 markIsland(i, j, grid);
+        }
+    }
+
+    public int numIslands3(char[][] grid) {
+        var result = 0;
+        for (var i = 0; i < grid.length; i++) {
+            for (var j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == '1') {
+                    result++;
+                    markIsland(grid, i, j);
+                }
+            }
+        }
+        return result;
+    }
+
+    private void markIsland(char[][] grid, int x, int y) {
+        grid[x][y] = '2';
+        var list = new LinkedList<int[]>();
+        list.add(new int[]{x, y});
+        var len = list.size();
+        var idx = new int[]{1, 0, -1, 0, 1};
+        int i;
+        int j;
+        int[] item;
+        while (len > 0) {
+            item = list.removeFirst();
+            for (int k = 1; k < idx.length; k++) {
+                i = item[0] + idx[k - 1];
+                j = item[1] + idx[k];
+                if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length && grid[i][j] == '1') {
+                    grid[i][j] = '2';
+                    list.add(new int[]{i, j});
+                }
+            }
+            len = list.size();
         }
     }
 }
