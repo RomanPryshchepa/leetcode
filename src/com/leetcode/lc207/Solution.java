@@ -42,10 +42,16 @@ public class Solution {
         var solution = new Solution();
         System.out.println(solution.canFinish(2, new int[][]{{1, 0}}));
         System.out.println(solution.canFinish2(2, new int[][]{{1, 0}}));
+        System.out.println(solution.canFinish3(2, new int[][]{{1, 0}}));
         System.out.println(solution.canFinish(2, new int[][]{{1, 0}, {0, 1}}));
         System.out.println(solution.canFinish2(2, new int[][]{{1, 0}, {0, 1}}));
+        System.out.println(solution.canFinish3(2, new int[][]{{1, 0}, {0, 1}}));
         System.out.println(solution.canFinish(6, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 1}, {5, 3}, {5, 4}}));
         System.out.println(solution.canFinish2(6, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 1}, {5, 3}, {5, 4}}));
+        System.out.println(solution.canFinish3(6, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}, {4, 2}, {5, 1}, {5, 3}, {5, 4}}));
+        System.out.println(solution.canFinish(12, new int[][]{{1, 0}, {2, 0}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 3}, {7, 4}, {8, 5}, {9, 6}, {10, 8}, {11, 10}}));
+        System.out.println(solution.canFinish2(12, new int[][]{{1, 0}, {2, 0}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 3}, {7, 4}, {8, 5}, {9, 6}, {10, 8}, {11, 10}}));
+        System.out.println(solution.canFinish3(12, new int[][]{{1, 0}, {2, 0}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 3}, {7, 4}, {8, 5}, {9, 6}, {10, 8}, {11, 10}}));
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -102,5 +108,39 @@ public class Solution {
             }
         }
         return coursesAB.isEmpty();
+    }
+
+    public boolean canFinish3(int numCourses, int[][] prerequisites) {
+        var prerequisitesCnt = new int[numCourses];
+        var nextCourses = new HashMap<Integer, List<Integer>>();
+        for (var prerequisite : prerequisites) {
+            prerequisitesCnt[prerequisite[0]]++;
+            if (!nextCourses.containsKey(prerequisite[1]))
+                nextCourses.put(prerequisite[1], new ArrayList<>());
+            nextCourses.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        var coursesWithZeroPre = getZeroCourses(prerequisitesCnt);
+        while (!coursesWithZeroPre.isEmpty()) {
+            for (var coursesWithZero : coursesWithZeroPre) {
+                if (nextCourses.containsKey(coursesWithZero)) {
+                    for (var nextCourse : nextCourses.get(coursesWithZero)) {
+                        prerequisitesCnt[nextCourse]--;
+                    }
+                    nextCourses.remove(coursesWithZero);
+                }
+            }
+            coursesWithZeroPre = getZeroCourses(prerequisitesCnt);
+        }
+        return nextCourses.isEmpty();
+    }
+
+    private List<Integer> getZeroCourses(int[] courses) {
+        var result = new ArrayList<Integer>();
+        for (var i = 0; i < courses.length; i++)
+            if (courses[i] == 0) {
+                courses[i] = -1;
+                result.add(i);
+            }
+        return result;
     }
 }
