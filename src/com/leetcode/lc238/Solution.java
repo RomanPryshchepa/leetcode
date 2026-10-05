@@ -40,8 +40,10 @@ public class Solution {
         var solution = new Solution();
         System.out.println(Arrays.toString(solution.productExceptSelf(new int[]{1, 2, 3, 4})));
         System.out.println(Arrays.toString(solution.productExceptSelf2(new int[]{1, 2, 3, 4})));
+        System.out.println(Arrays.toString(solution.productExceptSelf3(new int[]{1, 2, 3, 4})));
         System.out.println(Arrays.toString(solution.productExceptSelf(new int[]{-1, 1, 0, -3, 3})));
         System.out.println(Arrays.toString(solution.productExceptSelf2(new int[]{-1, 1, 0, -3, 3})));
+        System.out.println(Arrays.toString(solution.productExceptSelf3(new int[]{-1, 1, 0, -3, 3})));
     }
 
     public int[] productExceptSelf(int[] nums) {
@@ -79,5 +81,22 @@ public class Solution {
             res[i] = prefix[i] * suffix[i];
         }
         return res;
+    }
+
+    public int[] productExceptSelf3(int[] nums) {
+        int[] result = new int[nums.length];
+        int prod = result[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            prod *= nums[i-1];
+            result[i] = prod;
+        }
+
+        prod = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            prod *= nums[i + 1];
+            result[i] *= prod;
+        }
+
+        return result;
     }
 }
