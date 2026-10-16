@@ -48,12 +48,14 @@ public class Solution {
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest3(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest4(points, k)));
 
     points = new int[][]{{3, 3}, {5, -1}, {-2, 4}};
     k = 2;
     System.out.println(Arrays.deepToString(solution.kClosest(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest2(points, k)));
     System.out.println(Arrays.deepToString(solution.kClosest3(points, k)));
+    System.out.println(Arrays.deepToString(solution.kClosest4(points, k)));
   }
 
   public int[][] kClosest(int[][] points, int k) {
@@ -128,5 +130,15 @@ public class Solution {
       res[i][1] = pointsDist[i][1];
     }
     return res;
+  }
+
+  public int[][] kClosest4(int[][] points, int k) {
+    var q = new PriorityQueue<int[]>(Comparator.comparingInt(a -> a[2]));
+    for (var point : points)
+      q.add(new int[] {point[0], point[1], point[0] * point[0] + point[1] * point[1]});
+    var result = new int[k][2];
+    for (var i = 0; i < k; i++)
+      result[i] = new int[] {q.peek()[0], q.poll()[1]};
+    return result;
   }
 }
