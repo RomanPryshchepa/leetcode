@@ -30,18 +30,22 @@ public class Solution {
     n = 2;
     System.out.println(solution.climbStairs(n)); // 2
     System.out.println(solution.climbStairsR(n)); // 2
+    System.out.println(solution.climbStairs2(n)); // 2
 
     n = 3;
     System.out.println(solution.climbStairs(n)); // 3
     System.out.println(solution.climbStairsR(n)); // 3
+    System.out.println(solution.climbStairs2(n)); // 3
 
     n = 4;
     System.out.println(solution.climbStairs(n)); // 5
     System.out.println(solution.climbStairsR(n)); // 5
+    System.out.println(solution.climbStairs2(n)); // 5
 
     n = 5;
     System.out.println(solution.climbStairs(n)); // 8
     System.out.println(solution.climbStairsR(n)); // 8
+    System.out.println(solution.climbStairs2(n)); // 8
   }
 
   public int climbStairsR(int n) {
@@ -76,5 +80,17 @@ public class Solution {
       prev = current;
     }
     return current;
+  }
+
+  public int climbStairs2(int n) {
+    if (n < 4)
+      return n;
+    var prev = 2;
+    var result = 3;
+    for (var i = 4; i <= n; i++) {
+      result += prev;
+      prev = result - prev;
+    }
+    return result;
   }
 }
