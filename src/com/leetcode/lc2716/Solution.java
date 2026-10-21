@@ -68,8 +68,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.minimizedStringLength("aaabc"));
+        System.out.println(solution.minimizedStringLength2("aaabc"));
         System.out.println(solution.minimizedStringLength("cbbd"));
+        System.out.println(solution.minimizedStringLength2("cbbd"));
         System.out.println(solution.minimizedStringLength("baadccab"));
+        System.out.println(solution.minimizedStringLength2("baadccab"));
     }
 
     public int minimizedStringLength(String s) {
@@ -77,5 +80,16 @@ public class Solution {
         for (var c : s.toCharArray())
             set.add(c);
         return set.size();
+    }
+
+    public int minimizedStringLength2(String s) {
+        var letterCnt = new int[26];
+        for (var c : s.toCharArray())
+            if (letterCnt[c - 'a'] == 0)
+                letterCnt[c - 'a']++;
+        var result = 0;
+        for (var cnt : letterCnt)
+            result += cnt;
+        return result;
     }
 }
