@@ -37,44 +37,30 @@ public class Solution {
 
   public static void main(String[] args) {
     var solution = new Solution();
-    String s;
-    int k;
-    //Example 1:
-    //
-    //Input: s = "ABAB", k = 2
-    //Output: 4
-    //Explanation: Replace the two 'A's with two 'B's or vice versa.
-    s = "ABAB";
-    k = 2;
-    System.out.println(solution.characterReplacement(s, k));
-    System.out.println(solution.characterReplacement2(s, k));
-    System.out.println(solution.characterReplacement3(s, k));
-
-    //Example 2:
-    //
-    //Input: s = "AABABBA", k = 1
-    //Output: 4
-    //Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
-    //The substring "BBBB" has the longest repeating letters, which is 4.
-    //There may exists other ways to achieve this answer too.
-    s = "AABABBA";
-    k = 1;
-    System.out.println(solution.characterReplacement(s, k));
-    System.out.println(solution.characterReplacement2(s, k));
-    System.out.println(solution.characterReplacement3(s, k));
-
-    //Example 3:
-    //
-    //Input: s = "AABABBA", k = 0
-    //Output: 3
-    //Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
-    //The substring "BBBB" has the longest repeating letters, which is 4.
-    //There may exists other ways to achieve this answer too.
-    s = "ABAA";
-    k = 0;
-    System.out.println(solution.characterReplacement(s, k));
-    System.out.println(solution.characterReplacement2(s, k));
-    System.out.println(solution.characterReplacement3(s, k));
+    System.out.println(solution.characterReplacement("ABAB", 2)); //4
+    System.out.println(solution.characterReplacement2("ABAB", 2)); //4
+    System.out.println(solution.characterReplacement3("ABAB", 2)); //4
+    System.out.println(solution.characterReplacement4("ABAB", 2)); //4
+    System.out.println();
+    System.out.println(solution.characterReplacement("AABABBA", 1)); //4
+    System.out.println(solution.characterReplacement2("AABABBA", 1)); //4
+    System.out.println(solution.characterReplacement3("AABABBA", 1)); //4
+    System.out.println(solution.characterReplacement4("AABABBA", 1)); //4
+    System.out.println();
+    System.out.println(solution.characterReplacement("ABAA", 0)); //3
+    System.out.println(solution.characterReplacement2("ABAA", 0)); //3
+    System.out.println(solution.characterReplacement3("ABAA", 0)); //3
+    System.out.println(solution.characterReplacement4("ABAA", 0)); //3
+    System.out.println();
+    System.out.println(solution.characterReplacement("AAAA", 2)); //4
+    System.out.println(solution.characterReplacement2("AAAA", 2)); //4
+    System.out.println(solution.characterReplacement3("AAAA", 2)); //4
+    System.out.println(solution.characterReplacement4("AAAA", 2)); //4
+    System.out.println();
+    System.out.println(solution.characterReplacement("KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF", 4)); //7
+    System.out.println(solution.characterReplacement2("KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF", 4)); //7
+    System.out.println(solution.characterReplacement3("KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF", 4)); //7
+    System.out.println(solution.characterReplacement4("KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF", 4)); //7
   }
 
   public int characterReplacement(String s, int k) {
@@ -153,5 +139,31 @@ public class Solution {
         letterStorage[s.charAt(left++) - 'A']--;
     }
     return result;
+  }
+
+  public int characterReplacement4(String s, int k) {
+    var letterCnt = new int[26];
+    var lp = -1;
+    var result = 0;
+    for (var rp = 0; rp < s.length(); rp++) {
+      letterCnt[s.charAt(rp) - 'A']++;
+      while (isMoreThanK(letterCnt, k)) {
+        lp++;
+        letterCnt[s.charAt(lp) - 'A']--;
+      }
+      result = Math.max(result, rp - lp);
+    }
+    return result;
+  }
+
+  private boolean isMoreThanK(int[] letterCnt, int k) {
+    var max = 0;
+    var sum = 0;
+    for (var cnt : letterCnt) {
+      if (cnt > max)
+        max = cnt;
+      sum += cnt;
+    }
+    return sum - max > k;
   }
 }
