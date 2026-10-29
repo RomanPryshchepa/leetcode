@@ -44,21 +44,25 @@ public class Solution {
     temperatures = new int[] {73, 74, 75, 71, 69, 72, 76, 73};
     System.out.println(Arrays.toString(solution.dailyTemperatures(temperatures)));
     System.out.println(Arrays.toString(solution.dailyTemperatures2(temperatures)));
+    System.out.println(Arrays.toString(solution.dailyTemperatures3(temperatures)));
     System.out.println();
 
     temperatures = new int[] {30, 40, 50, 60};
     System.out.println(Arrays.toString(solution.dailyTemperatures(temperatures)));
     System.out.println(Arrays.toString(solution.dailyTemperatures2(temperatures)));
+    System.out.println(Arrays.toString(solution.dailyTemperatures3(temperatures)));
     System.out.println();
 
     temperatures = new int[] {30, 60, 90};
     System.out.println(Arrays.toString(solution.dailyTemperatures(temperatures)));
     System.out.println(Arrays.toString(solution.dailyTemperatures2(temperatures)));
+    System.out.println(Arrays.toString(solution.dailyTemperatures3(temperatures)));
     System.out.println();
 
     temperatures = new int[] {99, 99, 99, 99, 99, 99, 99, 100};
     System.out.println(Arrays.toString(solution.dailyTemperatures(temperatures)));
     System.out.println(Arrays.toString(solution.dailyTemperatures2(temperatures)));
+    System.out.println(Arrays.toString(solution.dailyTemperatures3(temperatures)));
   }
 
   public int[] dailyTemperatures(int[] temperatures) {
@@ -100,5 +104,25 @@ public class Solution {
       stackIdx.push(i);
     }
     return answer;
+  }
+
+  public int[] dailyTemperatures3(int[] temperatures) {
+    var result = new int[temperatures.length];
+    var tempPos = new int[100 - 30 + 1];
+    var tempMax = 0;
+    var minPos = 0;
+    for (var i = temperatures.length - 1; i >= 0; i--) {
+      if (temperatures[i] < tempMax) {
+        minPos = temperatures.length;
+        for (var k = temperatures[i] - 30 + 1; k < tempPos.length; k++)
+          if (tempPos[k] != 0)
+            minPos = Math.min(minPos, tempPos[k]);
+        result[i] = minPos - i;
+      }
+      else
+        tempMax = temperatures[i];
+      tempPos[temperatures[i] - 30] = i;
+    }
+    return result;
   }
 }
