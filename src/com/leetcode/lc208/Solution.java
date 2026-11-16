@@ -48,6 +48,7 @@ public class Solution {
         System.out.println(trie.startsWith("app"));       // return true
         trie.insert("app");
         System.out.println(trie.search("app"));     // return true
+
         System.out.println();
 
         Trie2 trie2 = new Trie2();
@@ -57,5 +58,15 @@ public class Solution {
         System.out.println(trie2.startsWith("app"));       // return true
         trie2.insert("app");
         System.out.println(trie2.search("app"));     // return true
+
+        System.out.println();
+
+        Trie3 trie3 = new Trie3();
+        trie3.insert("apple");
+        System.out.println(trie3.search("apple"));   // return true
+        System.out.println(trie3.search("app"));     // return false
+        System.out.println(trie3.startsWith("app"));       // return true
+        trie3.insert("app");
+        System.out.println(trie3.search("app"));     // return true
     }
 }
