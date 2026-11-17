@@ -1,8 +1,6 @@
 package com.leetcode.lc1268;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /*
 1268. Search Suggestions System
@@ -46,8 +44,10 @@ public class Solution {
         var solution = new Solution();
         System.out.println(solution.suggestedProducts(new String[] {"mobile","mouse","moneypot","monitor","mousepad"}, "mouse"));
         System.out.println(solution.suggestedProducts2(new String[] {"mobile","mouse","moneypot","monitor","mousepad"}, "mouse"));
+        System.out.println(solution.suggestedProducts3(new String[] {"mobile","mouse","moneypot","monitor","mousepad"}, "mouse"));
         System.out.println(solution.suggestedProducts(new String[] {"havana"}, "havana"));
         System.out.println(solution.suggestedProducts2(new String[] {"havana"}, "havana"));
+        System.out.println(solution.suggestedProducts3(new String[] {"havana"}, "havana"));
     }
 
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
@@ -94,5 +94,44 @@ public class Solution {
         if (list.size() <= 3)
             return list;
         return list.subList(0, 3);
+    }
+
+    public List<List<String>> suggestedProducts3(String[] products, String searchWord) {
+        var set = new TreeSet<String>();
+        var result = new ArrayList<List<String>>();
+        for (var product : products)
+            if (product.charAt(0) == searchWord.charAt(0))
+                set.add(product);
+        var list = new ArrayList<String>();
+        var k = 0;
+        for (var item : set) {
+            k++;
+            list.add(item);
+            if (k == 3)
+                break;
+        }
+        result.add(list);
+        Iterator<String> setIterator;
+        for (var i = 1; i < searchWord.length(); i++) {
+            setIterator = set.iterator();
+            String elem;
+            while (setIterator.hasNext()) {
+                elem = setIterator.next();
+                if (elem.length() <= i || elem.charAt(i) != searchWord.charAt(i))
+                    setIterator.remove();
+            }
+            list = new ArrayList<>();
+            k = 0;
+            for (var item : set) {
+                if (item.length() > i && item.charAt(i) == searchWord.charAt(i)) {
+                    k++;
+                    list.add(item);
+                    if (k == 3)
+                        break;
+                }
+            }
+            result.add(list);
+        }
+        return result;
     }
 }
