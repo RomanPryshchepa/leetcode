@@ -54,8 +54,11 @@ public class Solution {
     public static void main(String[] args) {
         var solution = new Solution();
         System.out.println(solution.minCost(3));
+        System.out.println(solution.minCost2(3));
         System.out.println(solution.minCost(4));
+        System.out.println(solution.minCost2(4));
         System.out.println(solution.minCost(500));
+        System.out.println(solution.minCost2(500));
     }
 
     public int minCost(int n) {
@@ -63,5 +66,9 @@ public class Solution {
         for (var i = 2; i <= n; i++)
             result += i - 1;
         return result;
+    }
+
+    public int minCost2(int n) {
+        return n *  (n - 1) / 2;
     }
 }
